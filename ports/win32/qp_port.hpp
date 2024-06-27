@@ -43,7 +43,7 @@
 #endif
 
 // no-return function specifier (C++11 Standard)
-#define Q_NORETURN  [[ noreturn ]] void
+#define QP_NORETURN  [[ noreturn ]] void
 
 
 // QActive event queue, os-type, and thread types

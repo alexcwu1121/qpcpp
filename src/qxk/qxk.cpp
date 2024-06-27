@@ -155,7 +155,7 @@ QP::QActive * current() noexcept {
         curr = QP::QActive::registry_[QXK_priv_.actPrio];
     }
 
-    Q_ASSERT_INCRIT(690, curr != nullptr);
+    QP_ASSERT_INCRIT(690, curr != nullptr);
 
     QF_MEM_APP();
     QF_CRIT_EXIT();
@@ -190,7 +190,7 @@ std::uint_fast8_t QXK_sched_() noexcept {
             p = static_cast<std::uint_fast8_t>(
                  QP::QActive::registry_[QXK_priv_.lockHolder]->getPrio());
             if (p != 0U) {
-                Q_ASSERT_INCRIT(410, QXK_priv_.readySet.hasElement(p));
+                QP_ASSERT_INCRIT(410, QXK_priv_.readySet.hasElement(p));
             }
         }
     }
@@ -198,7 +198,7 @@ std::uint_fast8_t QXK_sched_() noexcept {
     QP::QActive * const next = QP::QActive::registry_[p];
 
     // the next thread found must be registered in QF
-    Q_ASSERT_INCRIT(420, next != nullptr);
+    QP_ASSERT_INCRIT(420, next != nullptr);
 
     // is the current thread a basic-thread?
     if (curr == nullptr) {
@@ -269,7 +269,7 @@ void QXK_activate_() noexcept {
         QF_MEM_SYS();
 
         // check internal integrity (duplicate inverse storage)
-        Q_ASSERT_INCRIT(502,
+        QP_ASSERT_INCRIT(502,
             QXK_priv_.readySet.verify_(&QXK_priv_.readySet_dis));
 
         if (next->getEQueue().isEmpty()) { // empty queue?
@@ -290,13 +290,13 @@ void QXK_activate_() noexcept {
             if (p <= QXK_priv_.lockCeil) {
                 p = QXK_priv_.lockHolder;
                 if (p != 0U) {
-                    Q_ASSERT_INCRIT(510, QXK_priv_.readySet.hasElement(p));
+                    QP_ASSERT_INCRIT(510, QXK_priv_.readySet.hasElement(p));
                 }
             }
 
             // set the next thread and ensure that it is registered
             next = QP::QActive::registry_[p];
-            Q_ASSERT_INCRIT(520, next != nullptr);
+            QP_ASSERT_INCRIT(520, next != nullptr);
 
             // is next a basic thread?
             if (next->getOsObject() == nullptr) {

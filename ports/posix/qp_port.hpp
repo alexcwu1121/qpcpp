@@ -44,7 +44,7 @@
 #endif
 
 // no-return function specifier (C++11 Standard)
-#define Q_NORETURN  [[ noreturn ]] void
+#define QP_NORETURN  [[ noreturn ]] void
 
 // QActive event queue and thread types for POSIX
 #define QACTIVE_EQUEUE_TYPE  QEQueue
@@ -100,10 +100,10 @@ void onClockTick();
     // QF event queue customization for POSIX...
     #define QACTIVE_EQUEUE_WAIT_(me_) do { \
         while ((me_)->m_eQueue.m_frontEvt == nullptr) { \
-            Q_ASSERT_INCRIT(301, QF::critSectNest_ == 1); \
+            QP_ASSERT_INCRIT(301, QF::critSectNest_ == 1); \
             --QF::critSectNest_; \
             pthread_cond_wait(&(me_)->m_osObject, &QF::critSectMutex_); \
-            Q_ASSERT_INCRIT(302, QF::critSectNest_ == 0); \
+            QP_ASSERT_INCRIT(302, QF::critSectNest_ == 0); \
             ++QF::critSectNest_; \
         } \
     } while (false)

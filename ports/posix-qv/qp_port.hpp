@@ -43,7 +43,7 @@
 #endif
 
 // no-return function specifier (C++11 Standard)
-#define Q_NORETURN  [[ noreturn ]] void
+#define QP_NORETURN  [[ noreturn ]] void
 
 // QActive event queue and thread types for POSIX-QV
 #define QACTIVE_EQUEUE_TYPE  QEQueue
@@ -99,7 +99,7 @@ void onClockTick();
 
     // QF event queue customization for POSIX-QV...
     #define QACTIVE_EQUEUE_WAIT_(me_) \
-        Q_ASSERT_INCRIT(302, (me_)->m_eQueue.m_frontEvt != nullptr)
+        QP_ASSERT_INCRIT(302, (me_)->m_eQueue.m_frontEvt != nullptr)
 
 #ifndef Q_UNSAFE
     #define QACTIVE_EQUEUE_SIGNAL_(me_) \

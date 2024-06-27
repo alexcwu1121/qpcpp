@@ -140,7 +140,7 @@ bool QXMutex::lock(QTimeEvtCtr const nTicks) noexcept {
         if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
             // the holder prio. must be lower than that of the mutex
             // and the prio. slot must be occupied by this mutex
-            Q_ASSERT_INCRIT(210, (curr->m_prio < m_ao.m_prio)
+            QP_ASSERT_INCRIT(210, (curr->m_prio < m_ao.m_prio)
                 && (QActive::registry_[m_ao.m_prio] == &m_ao));
 
             // remove the thread's original prio from the ready set
@@ -167,7 +167,7 @@ bool QXMutex::lock(QTimeEvtCtr const nTicks) noexcept {
 
         // the nesting level beyond the arbitrary but high limit
         // most likely means cyclic or recursive locking of a mutex.
-        Q_ASSERT_INCRIT(220, m_ao.m_eQueue.m_nFree < 0xFFU);
+        QP_ASSERT_INCRIT(220, m_ao.m_eQueue.m_nFree < 0xFFU);
 
         // lock one more level
         m_ao.m_eQueue.m_nFree = m_ao.m_eQueue.m_nFree + 1U;
@@ -181,11 +181,11 @@ bool QXMutex::lock(QTimeEvtCtr const nTicks) noexcept {
     }
     else { // the mutex is already locked by a different thread
         // the mutex holder must be valid
-        Q_ASSERT_INCRIT(230, m_ao.m_osObject != nullptr);
+        QP_ASSERT_INCRIT(230, m_ao.m_osObject != nullptr);
 
         if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
             // the prio slot must be occupied by the thr. holding the mutex
-            Q_ASSERT_INCRIT(240, QActive::registry_[m_ao.m_prio]
+            QP_ASSERT_INCRIT(240, QActive::registry_[m_ao.m_prio]
                 == QXK_PTR_CAST_(QActive const *, m_ao.m_osObject));
         }
 
@@ -221,7 +221,7 @@ bool QXMutex::lock(QTimeEvtCtr const nTicks) noexcept {
         QF_CRIT_ENTRY();
         QF_MEM_SYS();
         // the blocking object must be this mutex
-        Q_ASSERT_INCRIT(250, curr->m_temp.obj
+        QP_ASSERT_INCRIT(250, curr->m_temp.obj
                          == QXK_PTR_CAST_(QMState*, this));
 
         // did the blocking time-out? (signal of zero means that it did)
@@ -233,7 +233,7 @@ bool QXMutex::lock(QTimeEvtCtr const nTicks) noexcept {
         }
         else { // blocking did NOT time out
             // the thread must NOT be waiting on this mutex
-            Q_ASSERT_INCRIT(260, !m_waitSet.hasElement(p));
+            QP_ASSERT_INCRIT(260, !m_waitSet.hasElement(p));
         }
         curr->m_temp.obj = nullptr; // clear blocking obj.
     }
@@ -288,7 +288,7 @@ bool QXMutex::tryLock() noexcept {
         if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
             // the holder prio. must be lower than that of the mutex
             // and the prio. slot must be occupied by this mutex
-            Q_ASSERT_INCRIT(310, (curr->m_prio < m_ao.m_prio)
+            QP_ASSERT_INCRIT(310, (curr->m_prio < m_ao.m_prio)
                 && (QActive::registry_[m_ao.m_prio] == &m_ao));
 
             // remove the thread's original prio from the ready set
@@ -313,7 +313,7 @@ bool QXMutex::tryLock() noexcept {
     // is the mutex locked by this thread already (nested locking)?
     else if (m_ao.m_osObject == curr) {
         // the nesting level must not exceed the specified limit
-        Q_ASSERT_INCRIT(320, m_ao.m_eQueue.m_nFree < 0xFFU);
+        QP_ASSERT_INCRIT(320, m_ao.m_eQueue.m_nFree < 0xFFU);
 
         // lock one more level
         m_ao.m_eQueue.m_nFree = m_ao.m_eQueue.m_nFree + 1U;
@@ -328,7 +328,7 @@ bool QXMutex::tryLock() noexcept {
     else { // the mutex is already locked by a different thread
         if (m_ao.m_prio != 0U) {  // prio.-ceiling protocol used?
             // the prio slot must be occupied by the thr. holding the mutex
-            Q_ASSERT_INCRIT(330, QActive::registry_[m_ao.m_prio]
+            QP_ASSERT_INCRIT(330, QActive::registry_[m_ao.m_prio]
                 == QXK_PTR_CAST_(QActive const *, m_ao.m_osObject));
         }
 
@@ -368,7 +368,7 @@ void QXMutex::unlock() noexcept {
 
         if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
 
-            Q_ASSERT_INCRIT(410, m_ao.m_prio < QF_MAX_ACTIVE);
+            QP_ASSERT_INCRIT(410, m_ao.m_prio < QF_MAX_ACTIVE);
 
             // restore the holding thread's prio from the mutex
             curr->m_prio  =
@@ -419,7 +419,7 @@ void QXMutex::unlock() noexcept {
             // - have the prio. corresponding to the registration
             // - be an extended thread
             // - be blocked on this mutex
-            Q_ASSERT_INCRIT(420, (thr != nullptr)
+            QP_ASSERT_INCRIT(420, (thr != nullptr)
                 && (thr->m_prio == static_cast<std::uint8_t>(p))
                 && (thr->m_state.act == Q_ACTION_CAST(0))
                 && (thr->m_temp.obj == QXK_PTR_CAST_(QMState*, this)));
@@ -442,7 +442,7 @@ void QXMutex::unlock() noexcept {
 
             if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
                 // the holder prio. must be lower than that of the mutex
-                Q_ASSERT_INCRIT(430, (m_ao.m_prio < QF_MAX_ACTIVE)
+                QP_ASSERT_INCRIT(430, (m_ao.m_prio < QF_MAX_ACTIVE)
                                      && (thr->m_prio < m_ao.m_prio));
 
                 // put the thread into AO registry in place of the mutex
@@ -459,7 +459,7 @@ void QXMutex::unlock() noexcept {
 
             if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
                 // the AO priority must be in range
-                Q_ASSERT_INCRIT(440, m_ao.m_prio < QF_MAX_ACTIVE);
+                QP_ASSERT_INCRIT(440, m_ao.m_prio < QF_MAX_ACTIVE);
 
                 // put the mutex back at the original mutex slot
                 QActive::registry_[m_ao.m_prio] = &m_ao;

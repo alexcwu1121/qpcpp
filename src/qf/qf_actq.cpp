@@ -337,7 +337,7 @@ QEvt const * QActive::get_() noexcept {
         m_eQueue.m_frontEvt = nullptr; // the queue becomes empty
 
         // all entries in the queue must be free (+1 for fronEvt)
-        Q_ASSERT_INCRIT(310, nFree == (m_eQueue.m_end + 1U));
+        QP_ASSERT_INCRIT(310, nFree == (m_eQueue.m_end + 1U));
 
         QS_BEGIN_PRE_(QS_QF_ACTIVE_GET_LAST, m_prio)
             QS_TIME_PRE_();       // timestamp

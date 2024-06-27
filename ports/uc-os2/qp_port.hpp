@@ -43,7 +43,7 @@
 #endif
 
 // no-return function specifier (C++11 Standard)
-#define Q_NORETURN  [[ noreturn ]] void
+#define QP_NORETURN  [[ noreturn ]] void
 
 // QActive customization for uC-OS2
 #define QACTIVE_EQUEUE_TYPE     OS_EVENT *

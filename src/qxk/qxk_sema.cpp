@@ -155,7 +155,7 @@ bool QXSemaphore::wait(QTimeEvtCtr const nTicks) noexcept {
         QF_MEM_SYS();
 
         // the blocking object must be this semaphore
-        Q_ASSERT_INCRIT(240, curr->m_temp.obj
+        QP_ASSERT_INCRIT(240, curr->m_temp.obj
                          == QXK_PTR_CAST_(QMState*, this));
 
         // did the blocking time-out? (signal of zero means that it did)
@@ -167,7 +167,7 @@ bool QXSemaphore::wait(QTimeEvtCtr const nTicks) noexcept {
         }
         else { // blocking did NOT time out
             // the thread must NOT be waiting on this semaphore
-            Q_ASSERT_INCRIT(250, !m_waitSet.hasElement(p));
+            QP_ASSERT_INCRIT(250, !m_waitSet.hasElement(p));
         }
         curr->m_temp.obj = nullptr; // clear blocking obj.
     }
@@ -241,7 +241,7 @@ bool QXSemaphore::signal() noexcept {
         // - must be registered in QF;
         // - must be extended; and
         // - must be blocked on this semaphore;
-        Q_ASSERT_INCRIT(410, (thr != nullptr)
+        QP_ASSERT_INCRIT(410, (thr != nullptr)
             && (thr->m_osObject != nullptr)
             && (thr->m_temp.obj
                 == QXK_PTR_CAST_(QMState*, this)));

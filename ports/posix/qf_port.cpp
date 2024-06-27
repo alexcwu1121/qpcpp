@@ -95,12 +95,12 @@ int_t critSectNest_;
 //............................................................................
 void enterCriticalSection_() {
     pthread_mutex_lock(&critSectMutex_);
-    Q_ASSERT_INCRIT(100, critSectNest_ == 0); // NO nesting of crit.sect!
+    QP_ASSERT_INCRIT(100, critSectNest_ == 0); // NO nesting of crit.sect!
     ++critSectNest_;
 }
 //............................................................................
 void leaveCriticalSection_() {
-    Q_ASSERT_INCRIT(200, critSectNest_ == 1); // crit.sect. must ballace!
+    QP_ASSERT_INCRIT(200, critSectNest_ == 1); // crit.sect. must ballace!
     if ((--critSectNest_) == 0) {
         pthread_mutex_unlock(&critSectMutex_);
     }
@@ -331,7 +331,7 @@ void QActive::start(QPrioSpec const prioSpec,
         pthread_attr_setschedparam(&attr, &param);
         err = pthread_create(&thread, &attr, &ao_thread, this);
     }
-    Q_ASSERT_ID(810, err == 0); // AO thread must be created
+    QP_ASSERT_ID(810, err == 0); // AO thread must be created
 
     //pthread_attr_getschedparam(&attr, &param);
     //printf("param.sched_priority==%d\n", param.sched_priority);

@@ -141,7 +141,7 @@ void QK_activate_() noexcept;
 
 //${QK-impl::QACTIVE_EQUEUE_WAIT_} ...........................................
 #define QACTIVE_EQUEUE_WAIT_(me_) \
-    Q_ASSERT_INCRIT(320, (me_)->m_eQueue.m_frontEvt != nullptr)
+    QP_ASSERT_INCRIT(320, (me_)->m_eQueue.m_frontEvt != nullptr)
 
 //${QK-impl::QACTIVE_EQUEUE_SIGNAL_} .........................................
 #ifndef Q_UNSAFE

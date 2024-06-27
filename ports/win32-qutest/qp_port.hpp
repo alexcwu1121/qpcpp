@@ -43,7 +43,7 @@
 #endif
 
 // no-return function specifier (C++11 Standard)
-#define Q_NORETURN  [[ noreturn ]] void
+#define QP_NORETURN  [[ noreturn ]] void
 
 
 // QActive event queue type
@@ -77,7 +77,7 @@
 
     // native event queue operations
     #define QACTIVE_EQUEUE_WAIT_(me_) \
-        Q_ASSERT_INCRIT(305, (me_)->m_eQueue.m_frontEvt != nullptr)
+        QP_ASSERT_INCRIT(305, (me_)->m_eQueue.m_frontEvt != nullptr)
 #ifndef Q_UNSAFE
     #define QACTIVE_EQUEUE_SIGNAL_(me_) \
         (QP::QS::tstPriv_.readySet.insert( \

@@ -43,7 +43,7 @@
 #endif
 
 // no-return function specifier (C++11 Standard)
-#define Q_NORETURN  [[ noreturn ]] void
+#define QP_NORETURN  [[ noreturn ]] void
 
 // QActive customization for FreeRTOS
 #define QACTIVE_EQUEUE_TYPE  QueueHandle_t

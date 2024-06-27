@@ -99,7 +99,7 @@ void QActive::start(QPrioSpec const prioSpec,
 
     QF_CRIT_STAT
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(210, tx_err == TX_SUCCESS);
+    QP_ASSERT_INCRIT(210, tx_err == TX_SUCCESS);
     QF_CRIT_EXIT();
 
     m_prio  = static_cast<std::uint8_t>(prioSpec & 0xFFU); // QF-priority
@@ -125,7 +125,7 @@ void QActive::start(QPrioSpec const prioSpec,
         TX_AUTO_START);
 
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(220, tx_err == TX_SUCCESS);
+    QP_ASSERT_INCRIT(220, tx_err == TX_SUCCESS);
     QF_CRIT_EXIT();
 }
 //............................................................................
@@ -195,7 +195,7 @@ bool QActive::post_(QEvt const * const e, std::uint_fast16_t const margin,
                                     TX_NO_WAIT);
         QF_CRIT_ENTRY();
         // posting to the ThreadX message queue must succeed, see NOTE3
-        Q_ASSERT_INCRIT(520, tx_err == TX_SUCCESS);
+        QP_ASSERT_INCRIT(520, tx_err == TX_SUCCESS);
     }
     else {
 
@@ -238,7 +238,7 @@ void QActive::postLIFO(QEvt const * const e) noexcept {
     // LIFO posting must succeed, see NOTE3
     QF_CRIT_ENTRY();
     // posting to the embOS mailbox must succeed, see NOTE3
-    Q_ASSERT_INCRIT(610, tx_err == TX_SUCCESS);
+    QP_ASSERT_INCRIT(610, tx_err == TX_SUCCESS);
     QF_CRIT_EXIT();
 }
 //............................................................................
@@ -248,7 +248,7 @@ QEvt const *QActive::get_(void) noexcept {
 
     QF_CRIT_STAT
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(710, tx_err == TX_SUCCESS);
+    QP_ASSERT_INCRIT(710, tx_err == TX_SUCCESS);
 
     QS_BEGIN_PRE_(QS_QF_ACTIVE_GET, m_prio)
         QS_TIME_PRE_();          // timestamp
@@ -320,7 +320,7 @@ void QFSchedLock::unlock(void) const {
     UINT tx_err = tx_thread_preemption_change(m_lockHolder, m_prevThre,
                                               &old_thre);
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(910, tx_err == TX_SUCCESS);
+    QP_ASSERT_INCRIT(910, tx_err == TX_SUCCESS);
     QF_CRIT_EXIT();
 }
 

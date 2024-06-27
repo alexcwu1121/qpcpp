@@ -104,7 +104,7 @@ void QActive::start(QPrioSpec const prioSpec,
     QF_CRIT_STAT
     QF_CRIT_ENTRY();
     // the uC-OS2 queue must be created correctly
-    Q_ASSERT_INCRIT(210, m_eQueue != nullptr);
+    QP_ASSERT_INCRIT(210, m_eQueue != nullptr);
     QF_CRIT_EXIT();
 
     m_prio  = static_cast<std::uint8_t>(prioSpec & 0xFFU); // QF-priority
@@ -166,7 +166,7 @@ void QActive::start(QPrioSpec const prioSpec,
 
     QF_CRIT_ENTRY();
     // uC-OS2 task must be created correctly
-    Q_ASSERT_INCRIT(220, err == OS_ERR_NONE);
+    QP_ASSERT_INCRIT(220, err == OS_ERR_NONE);
     QF_CRIT_EXIT();
 }
 //............................................................................
@@ -178,7 +178,7 @@ void QActive::setAttr(std::uint32_t attr1, void const *attr2) {
         case TASK_NAME_ATTR:
            // this function must be called before QACTIVE_START(),
            // which implies that m_eQueue must not be used yet;
-           Q_ASSERT_INCRIT(300, m_eQueue == nullptr);
+           QP_ASSERT_INCRIT(300, m_eQueue == nullptr);
            // temporarily store the name, cast 'const' away
            m_eQueue = static_cast<OS_EVENT *>(
                            const_cast<void *>(attr2));
@@ -240,7 +240,7 @@ bool QActive::post_(QEvt const * const e, std::uint_fast16_t const margin,
 
         QF_CRIT_ENTRY();
         // posting to uC-OS2 message queue must succeed, see NOTE3
-        Q_ASSERT_INCRIT(720, err == OS_ERR_NONE);
+        QP_ASSERT_INCRIT(720, err == OS_ERR_NONE);
         QF_CRIT_EXIT();
     }
     else {
@@ -285,7 +285,7 @@ void QActive::postLIFO(QEvt const * const e) noexcept {
 
     QF_CRIT_ENTRY();
     // posting to uC-OS2 message queue must succeed, see NOTE3
-    Q_ASSERT_INCRIT(810, err == OS_ERR_NONE);
+    QP_ASSERT_INCRIT(810, err == OS_ERR_NONE);
     QF_CRIT_EXIT();
 }
 //............................................................................
@@ -296,7 +296,7 @@ QEvt const *QActive::get_(void) noexcept {
 
     QF_CRIT_STAT
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(910, err == OS_ERR_NONE);
+    QP_ASSERT_INCRIT(910, err == OS_ERR_NONE);
 
     QS_BEGIN_PRE_(QS_QF_ACTIVE_GET, m_prio)
         QS_TIME_PRE_();      // timestamp

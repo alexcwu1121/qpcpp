@@ -107,7 +107,7 @@ void QActive::register_() noexcept {
         }
     }
 
-    Q_ASSERT_INCRIT(190, (prev_thre <= m_pthre)
+    QP_ASSERT_INCRIT(190, (prev_thre <= m_pthre)
                           && (m_pthre <= next_thre));
 
     m_prio_dis  = static_cast<std::uint8_t>(~m_prio);

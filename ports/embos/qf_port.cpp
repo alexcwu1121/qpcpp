@@ -178,7 +178,7 @@ void QActive::setAttr(std::uint32_t const attr1, void const *attr2) {
     switch (attr1) {
         case TASK_NAME_ATTR: {
 #if (OS_TRACKNAME != 0)
-            Q_ASSERT_INCRIT(300, m_thread.Name == nullptr);
+            QP_ASSERT_INCRIT(300, m_thread.Name == nullptr);
             m_thread.Name = static_cast<char const *>(attr2);
 #endif
             break;
@@ -239,7 +239,7 @@ bool QActive::post_(QEvt const * const e, std::uint_fast16_t const margin,
                                   static_cast<OS_CONST_PTR void *>(&e));
         QF_CRIT_ENTRY();
         // posting to the embOS mailbox must succeed, see NOTE3
-        Q_ASSERT_INCRIT(520, err == '\0');
+        QP_ASSERT_INCRIT(520, err == '\0');
     }
     else {
 
@@ -281,7 +281,7 @@ void QActive::postLIFO(QEvt const * const e) noexcept {
                                    static_cast<OS_CONST_PTR void *>(&e));
     QF_CRIT_ENTRY();
     // posting to the embOS mailbox must succeed, see NOTE3
-    Q_ASSERT_INCRIT(610, err == '\0');
+    QP_ASSERT_INCRIT(610, err == '\0');
     QF_CRIT_EXIT();
 }
 //............................................................................

@@ -36,12 +36,12 @@
 #ifdef __GNUC__
 
     // no-return function specifier (GCC-ARM compiler)
-    #define Q_NORETURN   __attribute__ ((noreturn)) void
+    #define QP_NORETURN   __attribute__ ((noreturn)) void
 
 #elif (defined _MSC_VER) && (defined __cplusplus)
 
     // no-return function specifier (Microsoft Visual Studio compiler)
-    #define Q_NORETURN   [[ noreturn ]] void
+    #define QP_NORETURN   [[ noreturn ]] void
 
 #endif
 
@@ -85,7 +85,7 @@
 
     // native event queue operations...
     #define QACTIVE_EQUEUE_WAIT_(me_) \
-        Q_ASSERT((me_)->m_eQueue.m_frontEvt != nullptr)
+        QP_ASSERT((me_)->m_eQueue.m_frontEvt != nullptr)
     #define QACTIVE_EQUEUE_SIGNAL_(me_) (static_cast<void>(0))
 
     // native QF event pool operations

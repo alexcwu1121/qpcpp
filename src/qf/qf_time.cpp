@@ -310,7 +310,7 @@ void QTimeEvt::tick(
             if (timeEvtHead_[tickRate].m_act != nullptr) {
 
                 // sanity check
-                Q_ASSERT_INCRIT(110, prev != nullptr);
+                QP_ASSERT_INCRIT(110, prev != nullptr);
                 prev->m_next = timeEvtHead_[tickRate].toTimeEvt();
                 timeEvtHead_[tickRate].m_act = nullptr;
                 e = prev->m_next; // switch to the new list
@@ -321,7 +321,7 @@ void QTimeEvt::tick(
         }
 
         // the time event 'e' must be valid
-        Q_ASSERT_INCRIT(112, QEvt::verify_(e));
+        QP_ASSERT_INCRIT(112, QEvt::verify_(e));
 
         if (e->m_ctr == 0U) { // time event scheduled for removal?
             prev->m_next = e->m_next;

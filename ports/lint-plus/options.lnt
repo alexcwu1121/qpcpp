@@ -80,7 +80,7 @@ qpcpp.lnt           // QP/C++ options
 
 //! MC++R16-0-4 function-like macro ???
 -esym(9026,
- Q_ASSERT_INCRIT,
+ QP_ASSERT_INCRIT,
  Q_REQUIRE_INCRIT,
  Q_ENSURE_INCRIT,
  Q_ERROR_INCRIT)

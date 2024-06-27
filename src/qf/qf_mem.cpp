@@ -94,7 +94,7 @@ void QMPool::init(
     }
 
     // the pool buffer must fit at least one rounded-up block
-    Q_ASSERT_INCRIT(110, poolSize >= m_blockSize);
+    QP_ASSERT_INCRIT(110, poolSize >= m_blockSize);
 
     // start at the head of the free list
     QFreeBlock *fb = m_free_head;
@@ -147,18 +147,18 @@ void * QMPool::get(
         fb = m_free_head;  // get a free block
 
         //  a free block must be valid
-        Q_ASSERT_INCRIT(300, fb != nullptr);
+        QP_ASSERT_INCRIT(300, fb != nullptr);
 
         QFreeBlock * const fb_next = fb->m_next;
 
         // the free block must have integrity (duplicate inverse storage)
-        Q_ASSERT_INCRIT(302, Q_UINTPTR_CAST_(fb_next)
+        QP_ASSERT_INCRIT(302, Q_UINTPTR_CAST_(fb_next)
                               == static_cast<std::uintptr_t>(~fb->m_next_dis));
 
         m_nFree = (m_nFree - 1U); // one free block less
         if (m_nFree == 0U) { // is the pool becoming empty?
             // pool is becoming empty, so the next free block must be NULL
-            Q_ASSERT_INCRIT(320, fb_next == nullptr);
+            QP_ASSERT_INCRIT(320, fb_next == nullptr);
 
             m_nMin = 0U; // remember that the pool got empty
         }
@@ -170,7 +170,7 @@ void * QMPool::get(
             // NOTE: The next free block pointer can fall out of range
             // when the client code writes past the memory block, thus
             // corrupting the next block.
-            Q_ASSERT_INCRIT(330,
+            QP_ASSERT_INCRIT(330,
                 QF_PTR_RANGE_(fb_next, m_start, m_end));
 
             // is the # free blocks the new minimum so far?

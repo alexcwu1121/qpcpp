@@ -158,7 +158,7 @@ void QActive::start(
             reinterpret_cast<std::uint8_t *>(qSto),   // queue buffer
             &m_osObject);                             // static queue buffer
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(210, m_eQueue != static_cast<QueueHandle_t>(0));
+    QP_ASSERT_INCRIT(210, m_eQueue != static_cast<QueueHandle_t>(0));
     QF_CRIT_EXIT();
 
     m_prio  = static_cast<std::uint8_t>(prioSpec & 0xFFU); // QF-priority
@@ -209,7 +209,7 @@ void QActive::start(
         &m_thread);     // task buffer
 
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(220, task != static_cast<TaskHandle_t>(0));
+    QP_ASSERT_INCRIT(220, task != static_cast<TaskHandle_t>(0));
     QF_CRIT_EXIT();
 }
 //............................................................................
@@ -288,7 +288,7 @@ bool QActive::post_(QEvt const * const e, std::uint_fast16_t const margin,
 
         // posting to the FreeRTOS message queue must succeed, see NOTE3
         QF_CRIT_ENTRY();
-        Q_ASSERT_INCRIT(520, err == pdPASS);
+        QP_ASSERT_INCRIT(520, err == pdPASS);
     }
     else {
 
@@ -330,7 +330,7 @@ void QActive::postLIFO(QEvt const * const e) noexcept {
 
     // LIFO posting to the FreeRTOS queue must succeed, see NOTE3
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(610, err == pdPASS);
+    QP_ASSERT_INCRIT(610, err == pdPASS);
     QF_CRIT_EXIT();
 }
 //............................................................................
@@ -405,7 +405,7 @@ bool QActive::postFromISR(QEvt const * const e,
 
         // posting to the FreeRTOS message queue must succeed
         uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
-        Q_ASSERT_INCRIT(820, err == pdPASS);
+        QP_ASSERT_INCRIT(820, err == pdPASS);
         portCLEAR_INTERRUPT_MASK_FROM_ISR(uxSavedInterruptStatus);
     }
     else {
@@ -470,7 +470,7 @@ void QActive::publishFromISR(QEvt const *e,
         do { // loop over all subscribers
             // the prio of the AO must be registered with the framework
             uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
-            Q_ASSERT_INCRIT(510, registry_[p] != nullptr);
+            QP_ASSERT_INCRIT(510, registry_[p] != nullptr);
             portCLEAR_INTERRUPT_MASK_FROM_ISR(uxSavedInterruptStatus);
 
             // POST_FROM_ISR() asserts if the queue overflows
@@ -518,7 +518,7 @@ void QTimeEvt::tickFromISR(std::uint_fast8_t const tickRate,
             if (timeEvtHead_[tickRate].m_act != nullptr) {
 
                 // sanity check
-                Q_ASSERT_INCRIT(610, prev != nullptr);
+                QP_ASSERT_INCRIT(610, prev != nullptr);
                 prev->m_next = QTimeEvt::timeEvtHead_[tickRate].toTimeEvt();
                 timeEvtHead_[tickRate].m_act = nullptr;
                 t = prev->m_next;  // switch to the new list
@@ -637,7 +637,7 @@ QEvt *QF::newXfromISR_(std::uint_fast16_t const evtSize,
     else { // event cannot be allocated
         // must tolerate bad alloc.
         uxSavedInterruptStatus = portSET_INTERRUPT_MASK_FROM_ISR();
-        Q_ASSERT_INCRIT(720, margin != QF::NO_MARGIN);
+        QP_ASSERT_INCRIT(720, margin != QF::NO_MARGIN);
         portCLEAR_INTERRUPT_MASK_FROM_ISR(uxSavedInterruptStatus);
 
 #ifdef Q_SPY
@@ -685,7 +685,7 @@ void QF::gcFromISR(QEvt const * const e) noexcept {
             QS_END_PRE_()
 
             // pool ID must be in range
-            Q_ASSERT_INCRIT(810, idx < priv_.maxPool_);
+            QP_ASSERT_INCRIT(810, idx < priv_.maxPool_);
 
             portCLEAR_INTERRUPT_MASK_FROM_ISR(uxSavedInterruptStatus);
 
@@ -749,19 +749,19 @@ void *QMPool::getFromISR(std::uint_fast16_t const margin,
         fb = static_cast<QFreeBlock *>(m_free_head); // get a free block
 
         // the pool has some free blocks, so a free block must be available
-        Q_ASSERT_INCRIT(900, fb != nullptr);
+        QP_ASSERT_INCRIT(900, fb != nullptr);
 
         QFreeBlock * const fb_next = fb->m_next; // fast temporary to avoid UB
 
         // the free block must have integrity (duplicate inverse storage)
-        Q_ASSERT_INCRIT(902, Q_UINTPTR_CAST_(fb_next)
+        QP_ASSERT_INCRIT(902, Q_UINTPTR_CAST_(fb_next)
                               == static_cast<uintptr_t>(~fb->m_next_dis));
 
         // is the pool becoming empty?
         --m_nFree; // one less free block
         if (m_nFree == 0U) {
             // pool is becoming empty, so the next free block must be NULL
-            Q_ASSERT_INCRIT(920, fb_next == nullptr);
+            QP_ASSERT_INCRIT(920, fb_next == nullptr);
 
             m_nMin = 0U; // remember that the pool got empty
         }
@@ -773,7 +773,7 @@ void *QMPool::getFromISR(std::uint_fast16_t const margin,
             // NOTE: The next free block pointer can fall out of range
             // when the client code writes past the memory block, thus
             // corrupting the next block.
-            Q_ASSERT_INCRIT(930, QF_PTR_RANGE_(fb_next, m_start, m_end));
+            QP_ASSERT_INCRIT(930, QF_PTR_RANGE_(fb_next, m_start, m_end));
 
             // is the number of free blocks the new minimum so far?
             if (m_nMin > m_nFree) {

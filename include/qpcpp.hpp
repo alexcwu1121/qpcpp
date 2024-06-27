@@ -107,9 +107,9 @@ using char_t = char;
 //! Static (compile-time) assertion.
 //!
 //! @deprecated
-//! Use Q_ASSERT_STATIC() or better yet `static_assert()` instead.
+//! Use QP_ASSERT_STATIC() or better yet `static_assert()` instead.
 //!
-#define Q_ASSERT_COMPILE(expr_) Q_ASSERT_STATIC(expr_)
+#define QP_ASSERT_COMPILE(expr_) QP_ASSERT_STATIC(expr_)
 
 //! @deprecated use QP::QF::NO_MARGIN instead
 #define QF_NO_MARGIN QP::QF::NO_MARGIN

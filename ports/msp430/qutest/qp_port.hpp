@@ -41,7 +41,7 @@
 #include "qp_config.hpp" // external QP configuration required in this port
 
 // no-return function specifier (C++11 Standard)
-#define Q_NORETURN  [[ noreturn ]] void
+#define QP_NORETURN  [[ noreturn ]] void
 
 // QF configuration for QK -- data members of the QActive class...
 
@@ -84,7 +84,7 @@
 
     // native event queue operations
     #define QACTIVE_EQUEUE_WAIT_(me_) \
-        Q_ASSERT_INCRIT(110, (me_)->m_eQueue.m_frontEvt != nullptr)
+        QP_ASSERT_INCRIT(110, (me_)->m_eQueue.m_frontEvt != nullptr)
 #ifndef Q_UNSAFE
     #define QACTIVE_EQUEUE_SIGNAL_(me_) \
         QF::readySet_.insert(static_cast<std::uint_fast8_t>((me_)->m_prio));

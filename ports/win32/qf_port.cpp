@@ -72,14 +72,14 @@ static int_t l_critSectNest;   // critical section nesting up-down counter
 void enterCriticalSection_() {
     if (l_isRunning) {
         EnterCriticalSection(&l_win32CritSect);
-        Q_ASSERT_INCRIT(100, l_critSectNest == 0); // NO nesting of crit.sect!
+        QP_ASSERT_INCRIT(100, l_critSectNest == 0); // NO nesting of crit.sect!
         ++l_critSectNest;
     }
 }
 //............................................................................
 void leaveCriticalSection_() {
     if (l_isRunning) {
-        Q_ASSERT_INCRIT(200, l_critSectNest == 1); // crit.sect. must ballace!
+        QP_ASSERT_INCRIT(200, l_critSectNest == 1); // crit.sect. must ballace!
         if ((--l_critSectNest) == 0) {
             LeaveCriticalSection(&l_win32CritSect);
         }

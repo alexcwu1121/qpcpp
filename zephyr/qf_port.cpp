@@ -240,7 +240,7 @@ bool QActive::post_(QEvt const * const e, std::uint_fast16_t const margin,
 
         // posting to the Zephyr message queue must succeed, see NOTE1
         QF_CRIT_ENTRY();
-        Q_ASSERT_INCRIT(520, err == 0);
+        QP_ASSERT_INCRIT(520, err == 0);
     }
     else {
 
@@ -282,7 +282,7 @@ void QActive::postLIFO(QEvt const * const e) noexcept {
     int err = k_msgq_put(&m_eQueue, static_cast<void const *>(&e), K_NO_WAIT);
 
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(710, err == 0);
+    QP_ASSERT_INCRIT(710, err == 0);
     QF_CRIT_EXIT();
 }
 //............................................................................
@@ -295,7 +295,7 @@ QEvt const *QActive::get_(void) noexcept {
     // queue-get must succeed
     QF_CRIT_STAT
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(810, err == 0);
+    QP_ASSERT_INCRIT(810, err == 0);
 
 
     QS_BEGIN_PRE_(QS_QF_ACTIVE_GET, m_prio)

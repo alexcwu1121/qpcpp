@@ -213,7 +213,7 @@ QEvt * newX_(
         // This assertion means that the event allocation failed,
         // and this failure cannot be tolerated. The most frequent
         // reason is an event leak in the application.
-        Q_ASSERT_INCRIT(320, margin != NO_MARGIN);
+        QP_ASSERT_INCRIT(320, margin != NO_MARGIN);
 
         QS_MEM_SYS();
         QS_BEGIN_PRE_(QS_QF_NEW_ATTEMPT,
@@ -267,7 +267,7 @@ void gc(QEvt const * const e) noexcept {
             QS_END_PRE_()
 
             // pool number must be in range
-            Q_ASSERT_INCRIT(410, (poolNum <= priv_.maxPool_)
+            QP_ASSERT_INCRIT(410, (poolNum <= priv_.maxPool_)
                                   && (poolNum <= QF_MAX_EPOOL));
             QF_MEM_APP();
             QF_CRIT_EXIT();

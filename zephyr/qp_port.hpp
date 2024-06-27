@@ -41,7 +41,7 @@
 #include "qp_config.hpp"   // external QP configuration
 
 // no-return function specifier (C++11 Standard)
-#define Q_NORETURN  [[ noreturn ]] void
+#define QP_NORETURN  [[ noreturn ]] void
 
 // QActive event queue and thread types
 #define QACTIVE_EQUEUE_TYPE  struct k_msgq

@@ -48,9 +48,9 @@
 // AC++M16-3-2 function-like macro
 -esym(9026,
  Q_DEFINE_THIS_MODULE,
- Q_ASSERT_STATIC,
- Q_ASSERT,
- Q_ASSERT_ID,
+ QP_ASSERT_STATIC,
+ QP_ASSERT,
+ QP_ASSERT_ID,
  Q_ERROR,
  Q_ERROR_ID,
  Q_REQUIRE,
@@ -63,8 +63,8 @@
 
 // use of c-style cast to void [AS-A5-2-2]
 -emacro(1954,
- Q_ASSERT,
- Q_ASSERT_ID,
+ QP_ASSERT,
+ QP_ASSERT_ID,
  Q_ERROR,
  Q_ERROR_ID,
  Q_REQUIRE,
@@ -73,7 +73,7 @@
  Q_ENSURE_ID,
  Q_INVARIANT,
  Q_INVARIANT_ID,
- Q_ASSERT_INCRIT)
+ QP_ASSERT_INCRIT)
 
 // MC++R10-0-6 unparenthesized macro parameter in definition of macro
 -esym(9022,
@@ -94,8 +94,8 @@
 
 // MC++R5-2-4 use of c-style cast
 -emacro(1924,
- Q_ASSERT,
- Q_ASSERT_ID,
+ QP_ASSERT,
+ QP_ASSERT_ID,
  Q_ERROR,
  Q_ERROR_ID)
 

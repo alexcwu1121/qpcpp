@@ -1074,7 +1074,7 @@ void rxHandleGoodFrame_(std::uint8_t const state) {
         }
         case WAIT4_TEST_PROBE_FRAME: {
             rxReportAck_(QP::QS_RX_TEST_PROBE);
-            Q_ASSERT_INCRIT(815,
+            QP_ASSERT_INCRIT(815,
                 QP::QS::tstPriv_.tpNum
                    < (sizeof(QP::QS::tstPriv_.tpBuf)
                       / sizeof(QP::QS::tstPriv_.tpBuf[0])));
@@ -1103,7 +1103,7 @@ static void rxHandleBadFrame_(std::uint8_t const state) noexcept {
         case WAIT4_EVT_FRAME: {
             QS_CRIT_STAT
             QS_CRIT_ENTRY();
-            Q_ASSERT_INCRIT(910, QP::QS::rxPriv_.var.evt.e != nullptr);
+            QP_ASSERT_INCRIT(910, QP::QS::rxPriv_.var.evt.e != nullptr);
             QS_CRIT_EXIT();
 #if (QF_MAX_EPOOL > 0U)
             QP::QF::gc(QP::QS::rxPriv_.var.evt.e); // don't leak allocated evt

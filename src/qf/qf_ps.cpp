@@ -157,7 +157,7 @@ void QActive::publish_(
 
         QActive *a = registry_[p];
         // the AO must be registered with the framework
-        Q_ASSERT_INCRIT(210, a != nullptr);
+        QP_ASSERT_INCRIT(210, a != nullptr);
 
         QF_MEM_APP();
         QF_CRIT_EXIT();
@@ -180,7 +180,7 @@ void QActive::publish_(
 
                 a = registry_[p];
                 // the AO must be registered with the framework
-                Q_ASSERT_INCRIT(220, a != nullptr);
+                QP_ASSERT_INCRIT(220, a != nullptr);
 
                 QF_MEM_APP();
                 QF_CRIT_EXIT();

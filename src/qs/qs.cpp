@@ -366,7 +366,7 @@ void glbFilter_(std::int_fast16_t const filter) noexcept {
             QS_CRIT_STAT
             QS_CRIT_ENTRY();
             // QS rec number must be below 0x7D, so no need for escaping
-            Q_ASSERT_INCRIT(210, rec < 0x7DU);
+            QP_ASSERT_INCRIT(210, rec < 0x7DU);
             QS_CRIT_EXIT();
 
             if (isRemove) {
@@ -426,7 +426,7 @@ void locFilter_(std::int_fast16_t const filter) noexcept {
             QS_CRIT_STAT
             QS_CRIT_ENTRY();
             // qsId must be in range
-            Q_ASSERT_INCRIT(310, qsId < 0x7FU);
+            QP_ASSERT_INCRIT(310, qsId < 0x7FU);
             QS_CRIT_EXIT();
             if (isRemove) {
                 filt_.loc[qsId >> 3U] &=

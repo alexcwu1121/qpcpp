@@ -241,7 +241,7 @@ void QXK_threadExit_();
 //${QXK-impl::QACTIVE_EQUEUE_WAIT_} ..........................................
 // QXK native event queue waiting
 #define QACTIVE_EQUEUE_WAIT_(me_) \
-   Q_ASSERT_INCRIT(310, (me_)->m_eQueue.m_frontEvt != nullptr)
+   QP_ASSERT_INCRIT(310, (me_)->m_eQueue.m_frontEvt != nullptr)
 
 //${QXK-impl::QACTIVE_EQUEUE_SIGNAL_} ........................................
 #ifndef Q_UNSAFE

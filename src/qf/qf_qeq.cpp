@@ -144,7 +144,7 @@ bool QEQueue::post(
     }
     else { // event cannot be posted
         // dropping events must be acceptable
-        Q_ASSERT_INCRIT(210, margin != QF::NO_MARGIN);
+        QP_ASSERT_INCRIT(210, margin != QF::NO_MARGIN);
 
         QS_BEGIN_PRE_(QS_QF_EQUEUE_POST_ATTEMPT, qsId)
             QS_TIME_PRE_();        // timestamp
@@ -251,7 +251,7 @@ QEvt const * QEQueue::get(std::uint_fast8_t const qsId) noexcept {
             m_frontEvt = nullptr; // queue becomes empty
 
             // all entries in the queue must be free (+1 for fronEvt)
-            Q_ASSERT_INCRIT(410, nFree == (m_end + 1U));
+            QP_ASSERT_INCRIT(410, nFree == (m_end + 1U));
 
             QS_BEGIN_PRE_(QS_QF_EQUEUE_GET_LAST, qsId)
                 QS_TIME_PRE_();      // timestamp

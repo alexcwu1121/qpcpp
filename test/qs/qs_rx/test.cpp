@@ -69,7 +69,7 @@ TEST("QS-RX putting 3 more") {
 // dependencies for the CUT ...
 
 //............................................................................
-extern "C" Q_NORETURN Q_onError(char const * const module, int_t const loc) {
+extern "C" QP_NORETURN Q_onError(char const * const module, int_t const loc) {
     Q_UNUSED_PAR(module);
     Q_UNUSED_PAR(loc);
     ET_onExit(-1);

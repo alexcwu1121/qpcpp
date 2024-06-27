@@ -68,16 +68,16 @@ extern "C" {
 #define Q_DEFINE_THIS_MODULE(name_) \
     static char const Q_this_module_[] = name_;
 
-//${QP-FuSa::enabled::Q_ASSERT_INCRIT} .......................................
-#define Q_ASSERT_INCRIT(id_, expr_)  \
+//${QP-FuSa::enabled::QP_ASSERT_INCRIT} .......................................
+#define QP_ASSERT_INCRIT(id_, expr_)  \
     ((expr_) ? ((void)0) : Q_onError(&Q_this_module_[0], (id_)))
 
 //${QP-FuSa::enabled::Q_ERROR_INCRIT} ........................................
 #define Q_ERROR_INCRIT(id_)  \
     (Q_onError(&Q_this_module_[0], (id_)))
 
-//${QP-FuSa::enabled::Q_ASSERT_ID} ...........................................
-#define Q_ASSERT_ID(id_, expr_) do { \
+//${QP-FuSa::enabled::QP_ASSERT_ID} ...........................................
+#define QP_ASSERT_ID(id_, expr_) do { \
     QF_CRIT_STAT \
     QF_CRIT_ENTRY(); \
     (expr_) ? ((void)0) : Q_onError(&Q_this_module_[0], (id_)); \
@@ -100,14 +100,14 @@ extern "C" {
 //${QP-FuSa::disabled::Q_DEFINE_THIS_MODULE} .................................
 #define Q_DEFINE_THIS_MODULE(name_)
 
-//${QP-FuSa::disabled::Q_ASSERT_INCRIT} ......................................
-#define Q_ASSERT_INCRIT(id_, expr_) ((void)0)
+//${QP-FuSa::disabled::QP_ASSERT_INCRIT} ......................................
+#define QP_ASSERT_INCRIT(id_, expr_) ((void)0)
 
 //${QP-FuSa::disabled::Q_ERROR_INCRIT} .......................................
 #define Q_ERROR_INCRIT(id_) ((void)0)
 
-//${QP-FuSa::disabled::Q_ASSERT_ID} ..........................................
-#define Q_ASSERT_ID(id_, expr_) ((void)0)
+//${QP-FuSa::disabled::QP_ASSERT_ID} ..........................................
+#define QP_ASSERT_ID(id_, expr_) ((void)0)
 
 //${QP-FuSa::disabled::Q_ERROR_ID} ...........................................
 #define Q_ERROR_ID(id_) ((void)0)
@@ -120,43 +120,43 @@ extern "C" {
 //${QP-FuSa::Q_DEFINE_THIS_FILE} .............................................
 #define Q_DEFINE_THIS_FILE Q_DEFINE_THIS_MODULE(__FILE__)
 
-//${QP-FuSa::Q_ASSERT} .......................................................
-#define Q_ASSERT(expr_) Q_ASSERT_ID(__LINE__, (expr_))
+//${QP-FuSa::QP_ASSERT} .......................................................
+#define QP_ASSERT(expr_) QP_ASSERT_ID(__LINE__, (expr_))
 
 //${QP-FuSa::Q_ERROR} ........................................................
 #define Q_ERROR() Q_ERROR_ID(__LINE__)
 
 //${QP-FuSa::Q_REQUIRE_ID} ...................................................
-#define Q_REQUIRE_ID(id_, expr_) Q_ASSERT_ID((id_), (expr_))
+#define Q_REQUIRE_ID(id_, expr_) QP_ASSERT_ID((id_), (expr_))
 
 //${QP-FuSa::Q_REQUIRE} ......................................................
-#define Q_REQUIRE(expr_) Q_ASSERT(expr_)
+#define Q_REQUIRE(expr_) QP_ASSERT(expr_)
 
 //${QP-FuSa::Q_REQUIRE_INCRIT} ...............................................
-#define Q_REQUIRE_INCRIT(id_, expr_) Q_ASSERT_INCRIT((id_), (expr_))
+#define Q_REQUIRE_INCRIT(id_, expr_) QP_ASSERT_INCRIT((id_), (expr_))
 
 //${QP-FuSa::Q_ENSURE_ID} ....................................................
-#define Q_ENSURE_ID(id_, expr_) Q_ASSERT_ID((id_), (expr_))
+#define Q_ENSURE_ID(id_, expr_) QP_ASSERT_ID((id_), (expr_))
 
 //${QP-FuSa::Q_ENSURE} .......................................................
-#define Q_ENSURE(expr_) Q_ASSERT(expr_)
+#define Q_ENSURE(expr_) QP_ASSERT(expr_)
 
 //${QP-FuSa::Q_ENSURE_INCRIT} ................................................
-#define Q_ENSURE_INCRIT(id_, expr_) Q_ASSERT_INCRIT((id_), (expr_))
+#define Q_ENSURE_INCRIT(id_, expr_) QP_ASSERT_INCRIT((id_), (expr_))
 
 //${QP-FuSa::Q_INVARIANT_ID} .................................................
-#define Q_INVARIANT_ID(id_, expr_) Q_ASSERT_ID((id_), (expr_))
+#define Q_INVARIANT_ID(id_, expr_) QP_ASSERT_ID((id_), (expr_))
 
 //${QP-FuSa::Q_INVARIANT} ....................................................
-#define Q_INVARIANT(expr_) Q_ASSERT(expr_)
+#define Q_INVARIANT(expr_) QP_ASSERT(expr_)
 
-//${QP-FuSa::Q_ASSERT_STATIC} ................................................
-#define Q_ASSERT_STATIC(expr_) extern char Q_static_assert_[(expr_) ? 1 : -1]
+//${QP-FuSa::QP_ASSERT_STATIC} ................................................
+#define QP_ASSERT_STATIC(expr_) extern char Q_static_assert_[(expr_) ? 1 : -1]
 
-//${QP-FuSa::Q_NORETURN} .....................................................
-#ifndef Q_NORETURN
-#define Q_NORETURN _Noreturn void
-#endif // ndef Q_NORETURN
+//${QP-FuSa::QP_NORETURN} .....................................................
+#ifndef QP_NORETURN
+#define QP_NORETURN _Noreturn void
+#endif // ndef QP_NORETURN
 
 //${QP-FuSa::int_t} ..........................................................
 #ifndef QP_VERSION
@@ -164,7 +164,7 @@ typedef int int_t;
 #endif // ndef QP_VERSION
 
 //${QP-FuSa::Q_onError} ......................................................
-Q_NORETURN Q_onError(
+QP_NORETURN Q_onError(
     char const * const module,
     int_t const id);
 

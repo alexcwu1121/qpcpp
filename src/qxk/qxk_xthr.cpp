@@ -137,7 +137,7 @@ bool QXThread::delay(QTimeEvtCtr const nTicks) noexcept {
     QF_MEM_SYS();
 
     // the blocking object must be the time event
-    Q_ASSERT_INCRIT(890, thr->m_temp.obj
+    QP_ASSERT_INCRIT(890, thr->m_temp.obj
                      == QXK_PTR_CAST_(QMState*, &thr->m_timeEvt));
     thr->m_temp.obj = nullptr; // clear
 
@@ -211,7 +211,7 @@ QEvt const * QXThread::queueGet(QTimeEvtCtr const nTicks) noexcept {
         QF_MEM_SYS();
 
         // the blocking object must be this queue
-        Q_ASSERT_INCRIT(510, thr->m_temp.obj ==
+        QP_ASSERT_INCRIT(510, thr->m_temp.obj ==
                          QXK_PTR_CAST_(QMState *, &thr->m_eQueue));
         thr->m_temp.obj = nullptr; // clear
     }
@@ -247,7 +247,7 @@ QEvt const * QXThread::queueGet(QTimeEvtCtr const nTicks) noexcept {
             thr->m_eQueue.m_frontEvt = nullptr; // empty queue
 
             // all entries in the queue must be free (+1 for fronEvt)
-            Q_ASSERT_INCRIT(520, nFree == (thr->m_eQueue.m_end + 1U));
+            QP_ASSERT_INCRIT(520, nFree == (thr->m_eQueue.m_end + 1U));
 
             QS_BEGIN_PRE_(QS_QF_ACTIVE_GET_LAST, thr->m_prio)
                 QS_TIME_PRE_();      // timestamp
@@ -333,7 +333,7 @@ void QXThread::teArm_(
         {
             std::uint_fast8_t const tickRate =
                 static_cast<std::uint_fast8_t>(m_timeEvt.refCtr_);
-            Q_ASSERT_INCRIT(710, tickRate < QF_MAX_TICK_RATE);
+            QP_ASSERT_INCRIT(710, tickRate < QF_MAX_TICK_RATE);
 
             // mark as linked
             m_timeEvt.refCtr_ = static_cast<std::uint8_t>(

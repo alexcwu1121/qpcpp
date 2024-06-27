@@ -41,7 +41,7 @@
 #include "qp_config.hpp" // external QP configuration required in this port
 
 // no-return function specifier (C++11 Standard)
-#define Q_NORETURN  [[ noreturn ]] void
+#define QP_NORETURN  [[ noreturn ]] void
 
 // QF configuration for QK -- data members of the QActive class...
 

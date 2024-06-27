@@ -122,7 +122,7 @@ void QMsm::init(
 
     QF_CRIT_ENTRY();
     // the top-most initial tran. must be taken
-    Q_ASSERT_INCRIT(210, r == Q_RET_TRAN_INIT);
+    QP_ASSERT_INCRIT(210, r == Q_RET_TRAN_INIT);
 
     QS_MEM_SYS();
     QS_BEGIN_PRE_(QS_QEP_STATE_INIT, qsId)
@@ -213,7 +213,7 @@ void QMsm::dispatch(
         else { // event unhandled due to a guard?
             QF_CRIT_ENTRY();
             // event must be unhandled due to a guard evaluating to 'false'
-            Q_ASSERT_INCRIT(310, r == Q_RET_UNHANDLED);
+            QP_ASSERT_INCRIT(310, r == Q_RET_UNHANDLED);
 
             QS_MEM_SYS();
             QS_BEGIN_PRE_(QS_QEP_UNHANDLED, qsId)
@@ -230,7 +230,7 @@ void QMsm::dispatch(
         --limit;
     } while ((t != nullptr) && (limit > 0));
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(310, limit > 0);
+    QP_ASSERT_INCRIT(310, limit > 0);
     QF_CRIT_EXIT();
 
     if (r >= Q_RET_TRAN) { // any kind of tran. taken?
@@ -239,7 +239,7 @@ void QMsm::dispatch(
 
         QF_CRIT_ENTRY();
         // the tran. source state must not be nullptr
-        Q_ASSERT_INCRIT(320, ts != nullptr);
+        QP_ASSERT_INCRIT(320, ts != nullptr);
         QF_CRIT_EXIT();
     #endif // Q_SPY
 
@@ -268,7 +268,7 @@ void QMsm::dispatch(
             else {
                 QF_CRIT_ENTRY();
                 // must be tran. to exit point
-                Q_ASSERT_INCRIT(340, r == Q_RET_TRAN_XP);
+                QP_ASSERT_INCRIT(340, r == Q_RET_TRAN_XP);
                 QF_CRIT_EXIT();
 
                 tmp.act = m_state.act; // save XP action
@@ -304,7 +304,7 @@ void QMsm::dispatch(
                 else {
                     QF_CRIT_ENTRY();
                     // TRAN_XP must NOT be followed by any other tran type
-                    Q_ASSERT_INCRIT(330, r < Q_RET_TRAN);
+                    QP_ASSERT_INCRIT(330, r < Q_RET_TRAN);
                     QF_CRIT_EXIT();
                 }
             }
@@ -314,7 +314,7 @@ void QMsm::dispatch(
         } while ((r >= Q_RET_TRAN) && (limit > 0));
 
         QF_CRIT_ENTRY();
-        Q_ASSERT_INCRIT(320, limit > 0);
+        QP_ASSERT_INCRIT(320, limit > 0);
 
         QS_MEM_SYS();
         QS_BEGIN_PRE_(QS_QEP_TRAN, qsId)
@@ -334,7 +334,7 @@ void QMsm::dispatch(
     else if (r == Q_RET_HANDLED) {
         QF_CRIT_ENTRY();
         // internal tran. source can't be nullptr
-        Q_ASSERT_INCRIT(340, t != nullptr);
+        QP_ASSERT_INCRIT(340, t != nullptr);
 
         QS_MEM_SYS();
         QS_BEGIN_PRE_(QS_QEP_INTERN_TRAN, qsId)
@@ -440,7 +440,7 @@ QMState const * QMsm::childStateObj(QMState const * const parent) const noexcept
     }
     QF_CRIT_STAT
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(610, limit > 0);
+    QP_ASSERT_INCRIT(610, limit > 0);
     QF_CRIT_EXIT();
 
     if (!isFound) { // still not found?
@@ -578,7 +578,7 @@ void QMsm::exitToTranSource_(
         if (s == nullptr) { // reached the top of a submachine?
             s = m_temp.obj; // the superstate from QM_SM_EXIT()
             QF_CRIT_ENTRY();
-            Q_ASSERT_INCRIT(810, s != nullptr); // must be valid
+            QP_ASSERT_INCRIT(810, s != nullptr); // must be valid
             QF_CRIT_EXIT();
         }
     }
@@ -624,7 +624,7 @@ QState QMsm::enterHistory_(
         }
     }
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(910, s == ts);
+    QP_ASSERT_INCRIT(910, s == ts);
     QF_CRIT_EXIT();
 
     // retrace the entry path in reverse (desired) order...

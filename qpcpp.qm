@@ -459,7 +459,7 @@ QState r = (*m_temp.fun)(this, Q_EVT_CAST(QEvt));
 
 QF_CRIT_ENTRY();
 // the top-most initial tran. must be taken
-Q_ASSERT_INCRIT(210, r == Q_RET_TRAN);
+QP_ASSERT_INCRIT(210, r == Q_RET_TRAN);
 
 QS_MEM_SYS();
 QS_BEGIN_PRE_(QS_QEP_STATE_INIT, qsId)
@@ -487,7 +487,7 @@ do {
     QF_CRIT_ENTRY();
     // The initial transition source state must be reached
     // Too many state nesting levels or &quot;malformed&quot; HSM.
-    Q_ASSERT_INCRIT(220, m_temp.fun == t);
+    QP_ASSERT_INCRIT(220, m_temp.fun == t);
     QF_CRIT_EXIT();
 
     m_temp.fun = path[0];
@@ -609,7 +609,7 @@ do {
 } while ((r == Q_RET_SUPER) &amp;&amp; (limit &gt; 0));
 
 QF_CRIT_ENTRY();
-Q_ASSERT_INCRIT(310, limit &gt; 0);
+QP_ASSERT_INCRIT(310, limit &gt; 0);
 QF_CRIT_EXIT();
 
 if (r &gt;= Q_RET_TRAN) { // regular tran. taken?
@@ -631,7 +631,7 @@ if (r &gt;= Q_RET_TRAN) { // regular tran. taken?
         --limit;
     }
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(320, limit &gt; 0);
+    QP_ASSERT_INCRIT(320, limit &gt; 0);
     QF_CRIT_EXIT();
 
     std::int_fast8_t ip = hsm_tran(path, qsId); // take the tran.
@@ -691,7 +691,7 @@ if (r &gt;= Q_RET_TRAN) { // regular tran. taken?
         QF_CRIT_ENTRY();
         // The initial transition source state must be reached.
         // Too many state nesting levels or &quot;malformed&quot; HSM.
-        Q_ASSERT_INCRIT(330, m_temp.fun == t);
+        QP_ASSERT_INCRIT(330, m_temp.fun == t);
         QF_CRIT_EXIT();
 
         m_temp.fun = path[0];
@@ -822,7 +822,7 @@ m_temp.uint = ~m_state.uint;
 
 QF_CRIT_STAT
 QF_CRIT_ENTRY();
-Q_ASSERT_INCRIT(890, isFound);
+QP_ASSERT_INCRIT(890, isFound);
 QF_CRIT_EXIT();
 
 return child; // return the child</code>
@@ -912,7 +912,7 @@ else {
                 QF_CRIT_ENTRY();
                 // Tran. source must be found within the nesting depth
                 // Too many state nesting levels or &quot;malformed&quot; HSM.
-                Q_ASSERT_INCRIT(510, r != Q_RET_SUPER);
+                QP_ASSERT_INCRIT(510, r != Q_RET_SUPER);
                 QF_CRIT_EXIT();
 
                 // the LCA not found yet?
@@ -972,7 +972,7 @@ else {
                             --limit;
                         } while ((r != Q_RET_HANDLED) &amp;&amp; (limit &gt; 0));
                         QF_CRIT_ENTRY();
-                        Q_ASSERT_INCRIT(530, limit &gt; 0);
+                        QP_ASSERT_INCRIT(530, limit &gt; 0);
                         QF_CRIT_EXIT();
                     }
                 }
@@ -1021,7 +1021,7 @@ QState r = (*m_temp.fun)(this, Q_EVT_CAST(QEvt));
 
 QF_CRIT_ENTRY();
 // the top-most initial tran. must be taken
-Q_ASSERT_INCRIT(210, r == Q_RET_TRAN_INIT);
+QP_ASSERT_INCRIT(210, r == Q_RET_TRAN_INIT);
 
 QS_MEM_SYS();
 QS_BEGIN_PRE_(QS_QEP_STATE_INIT, qsId)
@@ -1120,7 +1120,7 @@ do {
     else { // event unhandled due to a guard?
         QF_CRIT_ENTRY();
         // event must be unhandled due to a guard evaluating to 'false'
-        Q_ASSERT_INCRIT(310, r == Q_RET_UNHANDLED);
+        QP_ASSERT_INCRIT(310, r == Q_RET_UNHANDLED);
 
         QS_MEM_SYS();
         QS_BEGIN_PRE_(QS_QEP_UNHANDLED, qsId)
@@ -1137,7 +1137,7 @@ do {
     --limit;
 } while ((t != nullptr) &amp;&amp; (limit &gt; 0));
 QF_CRIT_ENTRY();
-Q_ASSERT_INCRIT(310, limit &gt; 0);
+QP_ASSERT_INCRIT(310, limit &gt; 0);
 QF_CRIT_EXIT();
 
 if (r &gt;= Q_RET_TRAN) { // any kind of tran. taken?
@@ -1146,7 +1146,7 @@ if (r &gt;= Q_RET_TRAN) { // any kind of tran. taken?
 
     QF_CRIT_ENTRY();
     // the tran. source state must not be nullptr
-    Q_ASSERT_INCRIT(320, ts != nullptr);
+    QP_ASSERT_INCRIT(320, ts != nullptr);
     QF_CRIT_EXIT();
 #endif // Q_SPY
 
@@ -1175,7 +1175,7 @@ if (r &gt;= Q_RET_TRAN) { // any kind of tran. taken?
         else {
             QF_CRIT_ENTRY();
             // must be tran. to exit point
-            Q_ASSERT_INCRIT(340, r == Q_RET_TRAN_XP);
+            QP_ASSERT_INCRIT(340, r == Q_RET_TRAN_XP);
             QF_CRIT_EXIT();
 
             tmp.act = m_state.act; // save XP action
@@ -1211,7 +1211,7 @@ if (r &gt;= Q_RET_TRAN) { // any kind of tran. taken?
             else {
                 QF_CRIT_ENTRY();
                 // TRAN_XP must NOT be followed by any other tran type
-                Q_ASSERT_INCRIT(330, r &lt; Q_RET_TRAN);
+                QP_ASSERT_INCRIT(330, r &lt; Q_RET_TRAN);
                 QF_CRIT_EXIT();
             }
         }
@@ -1221,7 +1221,7 @@ if (r &gt;= Q_RET_TRAN) { // any kind of tran. taken?
     } while ((r &gt;= Q_RET_TRAN) &amp;&amp; (limit &gt; 0));
 
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(320, limit &gt; 0);
+    QP_ASSERT_INCRIT(320, limit &gt; 0);
 
     QS_MEM_SYS();
     QS_BEGIN_PRE_(QS_QEP_TRAN, qsId)
@@ -1241,7 +1241,7 @@ if (r &gt;= Q_RET_TRAN) { // any kind of tran. taken?
 else if (r == Q_RET_HANDLED) {
     QF_CRIT_ENTRY();
     // internal tran. source can't be nullptr
-    Q_ASSERT_INCRIT(340, t != nullptr);
+    QP_ASSERT_INCRIT(340, t != nullptr);
 
     QS_MEM_SYS();
     QS_BEGIN_PRE_(QS_QEP_INTERN_TRAN, qsId)
@@ -1359,7 +1359,7 @@ for (s = m_state.obj;
 }
 QF_CRIT_STAT
 QF_CRIT_ENTRY();
-Q_ASSERT_INCRIT(610, limit &gt; 0);
+QP_ASSERT_INCRIT(610, limit &gt; 0);
 QF_CRIT_EXIT();
 
 if (!isFound) { // still not found?
@@ -1498,7 +1498,7 @@ for (; (s != ts) &amp;&amp; (limit &gt; 0); --limit) {
     if (s == nullptr) { // reached the top of a submachine?
         s = m_temp.obj; // the superstate from QM_SM_EXIT()
         QF_CRIT_ENTRY();
-        Q_ASSERT_INCRIT(810, s != nullptr); // must be valid
+        QP_ASSERT_INCRIT(810, s != nullptr); // must be valid
         QF_CRIT_EXIT();
     }
 }
@@ -1544,7 +1544,7 @@ while ((s != ts) &amp;&amp; (i &lt; MAX_ENTRY_DEPTH_)) {
     }
 }
 QF_CRIT_ENTRY();
-Q_ASSERT_INCRIT(910, s == ts);
+QP_ASSERT_INCRIT(910, s == ts);
 QF_CRIT_EXIT();
 
 // retrace the entry path in reverse (desired) order...
@@ -2103,7 +2103,7 @@ for (p = static_cast&lt;std::uint_fast8_t&gt;(m_prio) + 1U;
     }
 }
 
-Q_ASSERT_INCRIT(190, (prev_thre &lt;= m_pthre)
+QP_ASSERT_INCRIT(190, (prev_thre &lt;= m_pthre)
                       &amp;&amp; (m_pthre &lt;= next_thre));
 
 m_prio_dis  = static_cast&lt;std::uint8_t&gt;(~m_prio);
@@ -2397,7 +2397,7 @@ else {
     m_eQueue.m_frontEvt = nullptr; // the queue becomes empty
 
     // all entries in the queue must be free (+1 for fronEvt)
-    Q_ASSERT_INCRIT(310, nFree == (m_eQueue.m_end + 1U));
+    QP_ASSERT_INCRIT(310, nFree == (m_eQueue.m_end + 1U));
 
     QS_BEGIN_PRE_(QS_QF_ACTIVE_GET_LAST, m_prio)
         QS_TIME_PRE_();       // timestamp
@@ -2502,7 +2502,7 @@ if (subscrSet.notEmpty()) { // any subscribers?
 
     QActive *a = registry_[p];
     // the AO must be registered with the framework
-    Q_ASSERT_INCRIT(210, a != nullptr);
+    QP_ASSERT_INCRIT(210, a != nullptr);
 
     QF_MEM_APP();
     QF_CRIT_EXIT();
@@ -2525,7 +2525,7 @@ if (subscrSet.notEmpty()) { // any subscribers?
 
             a = registry_[p];
             // the AO must be registered with the framework
-            Q_ASSERT_INCRIT(220, a != nullptr);
+            QP_ASSERT_INCRIT(220, a != nullptr);
 
             QF_MEM_APP();
             QF_CRIT_EXIT();
@@ -2697,7 +2697,7 @@ if (e != nullptr) { // event available?
         // at least twice: once in the deferred event queue (eq-&gt;get()
         // did NOT decrement the reference counter) and once in the
         // AO's event queue.
-        Q_ASSERT_INCRIT(210, e-&gt;refCtr_ &gt;= 2U);
+        QP_ASSERT_INCRIT(210, e-&gt;refCtr_ &gt;= 2U);
 
         // we need to decrement the reference counter once, to account
         // for removing the event from the deferred event queue.
@@ -3169,7 +3169,7 @@ for (; limit &gt; 0U; --limit) {
         if (timeEvtHead_[tickRate].m_act != nullptr) {
 
             // sanity check
-            Q_ASSERT_INCRIT(110, prev != nullptr);
+            QP_ASSERT_INCRIT(110, prev != nullptr);
             prev-&gt;m_next = timeEvtHead_[tickRate].toTimeEvt();
             timeEvtHead_[tickRate].m_act = nullptr;
             e = prev-&gt;m_next; // switch to the new list
@@ -3180,7 +3180,7 @@ for (; limit &gt; 0U; --limit) {
     }
 
     // the time event 'e' must be valid
-    Q_ASSERT_INCRIT(112, QEvt::verify_(e));
+    QP_ASSERT_INCRIT(112, QEvt::verify_(e));
 
     if (e-&gt;m_ctr == 0U) { // time event scheduled for removal?
         prev-&gt;m_next = e-&gt;m_next;
@@ -3571,7 +3571,7 @@ if (((margin == QF::NO_MARGIN) &amp;&amp; (nFree &gt; 0U))
 }
 else { // event cannot be posted
     // dropping events must be acceptable
-    Q_ASSERT_INCRIT(210, margin != QF::NO_MARGIN);
+    QP_ASSERT_INCRIT(210, margin != QF::NO_MARGIN);
 
     QS_BEGIN_PRE_(QS_QF_EQUEUE_POST_ATTEMPT, qsId)
         QS_TIME_PRE_();        // timestamp
@@ -3681,7 +3681,7 @@ if (e != nullptr) { // was the queue not empty?
         m_frontEvt = nullptr; // queue becomes empty
 
         // all entries in the queue must be free (+1 for fronEvt)
-        Q_ASSERT_INCRIT(410, nFree == (m_end + 1U));
+        QP_ASSERT_INCRIT(410, nFree == (m_end + 1U));
 
         QS_BEGIN_PRE_(QS_QF_EQUEUE_GET_LAST, qsId)
             QS_TIME_PRE_();      // timestamp
@@ -3791,7 +3791,7 @@ while (m_blockSize &lt; static_cast&lt;QMPoolSize&gt;(blockSize)) {
 }
 
 // the pool buffer must fit at least one rounded-up block
-Q_ASSERT_INCRIT(110, poolSize &gt;= m_blockSize);
+QP_ASSERT_INCRIT(110, poolSize &gt;= m_blockSize);
 
 // start at the head of the free list
 QFreeBlock *fb = m_free_head;
@@ -3845,18 +3845,18 @@ if (m_nFree &gt; static_cast&lt;QMPoolCtr&gt;(margin)) {
     fb = m_free_head;  // get a free block
 
     //  a free block must be valid
-    Q_ASSERT_INCRIT(300, fb != nullptr);
+    QP_ASSERT_INCRIT(300, fb != nullptr);
 
     QFreeBlock * const fb_next = fb-&gt;m_next;
 
     // the free block must have integrity (duplicate inverse storage)
-    Q_ASSERT_INCRIT(302, Q_UINTPTR_CAST_(fb_next)
+    QP_ASSERT_INCRIT(302, Q_UINTPTR_CAST_(fb_next)
                           == static_cast&lt;std::uintptr_t&gt;(~fb-&gt;m_next_dis));
 
     m_nFree = (m_nFree - 1U); // one free block less
     if (m_nFree == 0U) { // is the pool becoming empty?
         // pool is becoming empty, so the next free block must be NULL
-        Q_ASSERT_INCRIT(320, fb_next == nullptr);
+        QP_ASSERT_INCRIT(320, fb_next == nullptr);
 
         m_nMin = 0U; // remember that the pool got empty
     }
@@ -3868,7 +3868,7 @@ if (m_nFree &gt; static_cast&lt;QMPoolCtr&gt;(margin)) {
         // NOTE: The next free block pointer can fall out of range
         // when the client code writes past the memory block, thus
         // corrupting the next block.
-        Q_ASSERT_INCRIT(330,
+        QP_ASSERT_INCRIT(330,
             QF_PTR_RANGE_(fb_next, m_start, m_end));
 
         // is the # free blocks the new minimum so far?
@@ -4209,7 +4209,7 @@ else { // event was not allocated
     // This assertion means that the event allocation failed,
     // and this failure cannot be tolerated. The most frequent
     // reason is an event leak in the application.
-    Q_ASSERT_INCRIT(320, margin != NO_MARGIN);
+    QP_ASSERT_INCRIT(320, margin != NO_MARGIN);
 
     QS_MEM_SYS();
     QS_BEGIN_PRE_(QS_QF_NEW_ATTEMPT,
@@ -4265,7 +4265,7 @@ if (poolNum != 0U) { // is it a pool event (mutable)?
         QS_END_PRE_()
 
         // pool number must be in range
-        Q_ASSERT_INCRIT(410, (poolNum &lt;= priv_.maxPool_)
+        QP_ASSERT_INCRIT(410, (poolNum &lt;= priv_.maxPool_)
                               &amp;&amp; (poolNum &lt;= QF_MAX_EPOOL));
         QF_MEM_APP();
         QF_CRIT_EXIT();
@@ -4632,7 +4632,7 @@ gc(evtRef); // recycle the referenced event
 QF_CRIT_ENTRY();
 QF_MEM_SYS();
 
-Q_ASSERT_INCRIT(102, priv_.schedCeil
+QP_ASSERT_INCRIT(102, priv_.schedCeil
     == static_cast&lt;std::uint_fast8_t&gt;(~priv_.schedCeil_dis));
 
 if (ceiling &gt; priv_.schedCeil) { // raising the scheduler ceiling?
@@ -4658,7 +4658,7 @@ QF_CRIT_EXIT();</code>
 QF_CRIT_ENTRY();
 QF_MEM_SYS();
 
-Q_ASSERT_INCRIT(202, priv_.schedCeil
+QP_ASSERT_INCRIT(202, priv_.schedCeil
     == static_cast&lt;std::uint_fast8_t&gt;(~priv_.schedCeil_dis));
 
 if (priv_.schedCeil != 0U) { // actually enabling the scheduler?
@@ -4730,10 +4730,10 @@ std::uint_fast8_t pprev = 0U; // previous prio.
 for (;;) { // QV event loop...
 
     // check internal integrity (duplicate inverse storage)
-    Q_ASSERT_INCRIT(302,
+    QP_ASSERT_INCRIT(302,
          QV::priv_.readySet.verify_(&amp;QV::priv_.readySet_dis));
     // check internal integrity (duplicate inverse storage)
-    Q_ASSERT_INCRIT(303, QV::priv_.schedCeil
+    QP_ASSERT_INCRIT(303, QV::priv_.schedCeil
         == static_cast&lt;std::uint_fast8_t&gt;(~QV::priv_.schedCeil_dis));
 
     // find the maximum prio. AO ready to run
@@ -4872,7 +4872,7 @@ QS_FLUSH(); // flush the trace buffer to the host</code>
    <!--${QV-impl::QACTIVE_EQUEUE_W~::me_}-->
    <parameter name="me_" type="QP::QActive *"/>
    <code>\
-    Q_ASSERT_INCRIT(310, (me_)-&gt;m_eQueue.m_frontEvt != nullptr)</code>
+    QP_ASSERT_INCRIT(310, (me_)-&gt;m_eQueue.m_frontEvt != nullptr)</code>
   </operation>
   <!--${QV-impl::QACTIVE_EQUEUE_SIGNAL_}-->
   <operation name="QACTIVE_EQUEUE_SIGNAL_?ndef Q_UNSAFE" type="" visibility="0x03" properties="0x00">
@@ -5145,7 +5145,7 @@ else {
     // find the highest-prio AO with non-empty event queue
     p = QK_priv_.readySet.findMax();
 
-    Q_ASSERT_INCRIT(412, QK_priv_.actThre
+    QP_ASSERT_INCRIT(412, QK_priv_.actThre
         == static_cast&lt;std::uint_fast8_t&gt;(~QK_priv_.actThre_dis));
 
     // is the AO's prio. below the active preemption-threshold?
@@ -5153,7 +5153,7 @@ else {
         p = 0U; // no activation needed
     }
     else {
-        Q_ASSERT_INCRIT(422, QK_priv_.lockCeil
+        QP_ASSERT_INCRIT(422, QK_priv_.lockCeil
             == static_cast&lt;std::uint_fast8_t&gt;(~QK_priv_.lockCeil_dis));
 
         // is the AO's prio. below the lock-ceiling?
@@ -5161,7 +5161,7 @@ else {
             p = 0U; // no activation needed
         }
         else {
-            Q_ASSERT_INCRIT(432, QK_priv_.nextPrio
+            QP_ASSERT_INCRIT(432, QK_priv_.nextPrio
                 == static_cast&lt;std::uint_fast8_t&gt;(~QK_priv_.nextPrio_dis));
             QK_priv_.nextPrio = p; // next AO to run
 #ifndef Q_UNSAFE
@@ -5204,20 +5204,20 @@ if (prio_in == 0U) { // preempting the idle thread?
 }
 else {
     a = QP::QActive::registry_[prio_in];
-    Q_ASSERT_INCRIT(510, a != nullptr);
+    QP_ASSERT_INCRIT(510, a != nullptr);
 
     pthre_in = static_cast&lt;std::uint_fast8_t&gt;(a-&gt;getPThre());
-    Q_ASSERT_INCRIT(511, pthre_in == static_cast&lt;std::uint_fast8_t&gt;(
+    QP_ASSERT_INCRIT(511, pthre_in == static_cast&lt;std::uint_fast8_t&gt;(
         ~static_cast&lt;std::uint_fast8_t&gt;(a-&gt;m_pthre_dis) &amp; 0xFFU));
 }
 
 // loop until no more ready-to-run AOs of higher pthre than the initial
 do  {
     a = QP::QActive::registry_[p]; // obtain the pointer to the AO
-    Q_ASSERT_INCRIT(520, a != nullptr); // the AO must be registered
+    QP_ASSERT_INCRIT(520, a != nullptr); // the AO must be registered
     std::uint_fast8_t const pthre
         = static_cast&lt;std::uint_fast8_t&gt;(a-&gt;getPThre());
-    Q_ASSERT_INCRIT(522, pthre == static_cast&lt;std::uint_fast8_t&gt;(
+    QP_ASSERT_INCRIT(522, pthre == static_cast&lt;std::uint_fast8_t&gt;(
         ~static_cast&lt;std::uint_fast8_t&gt;(a-&gt;m_pthre_dis) &amp; 0xFFU));
 
     // set new active prio. and preemption-threshold
@@ -5261,7 +5261,7 @@ do  {
     QF_MEM_SYS();
 
     // internal integrity check (duplicate inverse storage)
-    Q_ASSERT_INCRIT(532,
+    QP_ASSERT_INCRIT(532,
         QK_priv_.readySet.verify_(&amp;QK_priv_.readySet_dis));
 
     if (a-&gt;getEQueue().isEmpty()) { // empty queue?
@@ -5283,7 +5283,7 @@ do  {
             p = 0U; // no activation needed
         }
         else {
-            Q_ASSERT_INCRIT(542,
+            QP_ASSERT_INCRIT(542,
                 QK_priv_.lockCeil == ~QK_priv_.lockCeil_dis);
 
             // is the AO's prio. below the lock preemption-threshold?
@@ -5291,7 +5291,7 @@ do  {
                 p = 0U; // no activation needed
             }
             else {
-                Q_ASSERT_INCRIT(550, p &lt;= QF_MAX_ACTIVE);
+                QP_ASSERT_INCRIT(550, p &lt;= QF_MAX_ACTIVE);
             }
         }
     }
@@ -5362,7 +5362,7 @@ QF_onContextSw(QP::QActive::registry_[pprev], a);
    <!--${QK-impl::QACTIVE_EQUEUE_W~::me_}-->
    <parameter name="me_" type="QP::QActive *"/>
    <code>\
-    Q_ASSERT_INCRIT(320, (me_)-&gt;m_eQueue.m_frontEvt != nullptr)</code>
+    QP_ASSERT_INCRIT(320, (me_)-&gt;m_eQueue.m_frontEvt != nullptr)</code>
   </operation>
   <!--${QK-impl::QACTIVE_EQUEUE_SIGNAL_}-->
   <operation name="QACTIVE_EQUEUE_SIGNAL_?ndef Q_UNSAFE" type="" visibility="0x03" properties="0x00">
@@ -5496,7 +5496,7 @@ if (curr == nullptr) { // basic thread?
     curr = QP::QActive::registry_[QXK_priv_.actPrio];
 }
 
-Q_ASSERT_INCRIT(690, curr != nullptr);
+QP_ASSERT_INCRIT(690, curr != nullptr);
 
 QF_MEM_APP();
 QF_CRIT_EXIT();
@@ -5603,7 +5603,7 @@ QF_CRIT_ENTRY();
 QF_MEM_SYS();
 
 // the blocking object must be the time event
-Q_ASSERT_INCRIT(890, thr-&gt;m_temp.obj
+QP_ASSERT_INCRIT(890, thr-&gt;m_temp.obj
                  == QXK_PTR_CAST_(QMState*, &amp;thr-&gt;m_timeEvt));
 thr-&gt;m_temp.obj = nullptr; // clear
 
@@ -5679,7 +5679,7 @@ if (thr-&gt;m_eQueue.m_frontEvt == nullptr) {
     QF_MEM_SYS();
 
     // the blocking object must be this queue
-    Q_ASSERT_INCRIT(510, thr-&gt;m_temp.obj ==
+    QP_ASSERT_INCRIT(510, thr-&gt;m_temp.obj ==
                      QXK_PTR_CAST_(QMState *, &amp;thr-&gt;m_eQueue));
     thr-&gt;m_temp.obj = nullptr; // clear
 }
@@ -5715,7 +5715,7 @@ if (thr-&gt;m_eQueue.m_frontEvt != nullptr) {
         thr-&gt;m_eQueue.m_frontEvt = nullptr; // empty queue
 
         // all entries in the queue must be free (+1 for fronEvt)
-        Q_ASSERT_INCRIT(520, nFree == (thr-&gt;m_eQueue.m_end + 1U));
+        QP_ASSERT_INCRIT(520, nFree == (thr-&gt;m_eQueue.m_end + 1U));
 
         QS_BEGIN_PRE_(QS_QF_ACTIVE_GET_LAST, thr-&gt;m_prio)
             QS_TIME_PRE_();      // timestamp
@@ -5803,7 +5803,7 @@ if (nTicks != QXTHREAD_NO_TIMEOUT) {
     {
         std::uint_fast8_t const tickRate =
             static_cast&lt;std::uint_fast8_t&gt;(m_timeEvt.refCtr_);
-        Q_ASSERT_INCRIT(710, tickRate &lt; QF_MAX_TICK_RATE);
+        QP_ASSERT_INCRIT(710, tickRate &lt; QF_MAX_TICK_RATE);
 
         // mark as linked
         m_timeEvt.refCtr_ = static_cast&lt;std::uint8_t&gt;(
@@ -5945,7 +5945,7 @@ else { // semaphore not available -- BLOCK the thread
     QF_MEM_SYS();
 
     // the blocking object must be this semaphore
-    Q_ASSERT_INCRIT(240, curr-&gt;m_temp.obj
+    QP_ASSERT_INCRIT(240, curr-&gt;m_temp.obj
                      == QXK_PTR_CAST_(QMState*, this));
 
     // did the blocking time-out? (signal of zero means that it did)
@@ -5957,7 +5957,7 @@ else { // semaphore not available -- BLOCK the thread
     }
     else { // blocking did NOT time out
         // the thread must NOT be waiting on this semaphore
-        Q_ASSERT_INCRIT(250, !m_waitSet.hasElement(p));
+        QP_ASSERT_INCRIT(250, !m_waitSet.hasElement(p));
     }
     curr-&gt;m_temp.obj = nullptr; // clear blocking obj.
 }
@@ -6031,7 +6031,7 @@ if (m_waitSet.notEmpty()) {
     // - must be registered in QF;
     // - must be extended; and
     // - must be blocked on this semaphore;
-    Q_ASSERT_INCRIT(410, (thr != nullptr)
+    QP_ASSERT_INCRIT(410, (thr != nullptr)
         &amp;&amp; (thr-&gt;m_osObject != nullptr)
         &amp;&amp; (thr-&gt;m_temp.obj
             == QXK_PTR_CAST_(QMState*, this)));
@@ -6151,7 +6151,7 @@ if (m_ao.m_eQueue.m_nFree == 0U) {
     if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
         // the holder prio. must be lower than that of the mutex
         // and the prio. slot must be occupied by this mutex
-        Q_ASSERT_INCRIT(210, (curr-&gt;m_prio &lt; m_ao.m_prio)
+        QP_ASSERT_INCRIT(210, (curr-&gt;m_prio &lt; m_ao.m_prio)
             &amp;&amp; (QActive::registry_[m_ao.m_prio] == &amp;m_ao));
 
         // remove the thread's original prio from the ready set
@@ -6178,7 +6178,7 @@ else if (m_ao.m_osObject == curr) {
 
     // the nesting level beyond the arbitrary but high limit
     // most likely means cyclic or recursive locking of a mutex.
-    Q_ASSERT_INCRIT(220, m_ao.m_eQueue.m_nFree &lt; 0xFFU);
+    QP_ASSERT_INCRIT(220, m_ao.m_eQueue.m_nFree &lt; 0xFFU);
 
     // lock one more level
     m_ao.m_eQueue.m_nFree = m_ao.m_eQueue.m_nFree + 1U;
@@ -6192,11 +6192,11 @@ else if (m_ao.m_osObject == curr) {
 }
 else { // the mutex is already locked by a different thread
     // the mutex holder must be valid
-    Q_ASSERT_INCRIT(230, m_ao.m_osObject != nullptr);
+    QP_ASSERT_INCRIT(230, m_ao.m_osObject != nullptr);
 
     if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
         // the prio slot must be occupied by the thr. holding the mutex
-        Q_ASSERT_INCRIT(240, QActive::registry_[m_ao.m_prio]
+        QP_ASSERT_INCRIT(240, QActive::registry_[m_ao.m_prio]
             == QXK_PTR_CAST_(QActive const *, m_ao.m_osObject));
     }
 
@@ -6232,7 +6232,7 @@ else { // the mutex is already locked by a different thread
     QF_CRIT_ENTRY();
     QF_MEM_SYS();
     // the blocking object must be this mutex
-    Q_ASSERT_INCRIT(250, curr-&gt;m_temp.obj
+    QP_ASSERT_INCRIT(250, curr-&gt;m_temp.obj
                      == QXK_PTR_CAST_(QMState*, this));
 
     // did the blocking time-out? (signal of zero means that it did)
@@ -6244,7 +6244,7 @@ else { // the mutex is already locked by a different thread
     }
     else { // blocking did NOT time out
         // the thread must NOT be waiting on this mutex
-        Q_ASSERT_INCRIT(260, !m_waitSet.hasElement(p));
+        QP_ASSERT_INCRIT(260, !m_waitSet.hasElement(p));
     }
     curr-&gt;m_temp.obj = nullptr; // clear blocking obj.
 }
@@ -6299,7 +6299,7 @@ if (m_ao.m_eQueue.m_nFree == 0U) {
     if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
         // the holder prio. must be lower than that of the mutex
         // and the prio. slot must be occupied by this mutex
-        Q_ASSERT_INCRIT(310, (curr-&gt;m_prio &lt; m_ao.m_prio)
+        QP_ASSERT_INCRIT(310, (curr-&gt;m_prio &lt; m_ao.m_prio)
             &amp;&amp; (QActive::registry_[m_ao.m_prio] == &amp;m_ao));
 
         // remove the thread's original prio from the ready set
@@ -6324,7 +6324,7 @@ if (m_ao.m_eQueue.m_nFree == 0U) {
 // is the mutex locked by this thread already (nested locking)?
 else if (m_ao.m_osObject == curr) {
     // the nesting level must not exceed the specified limit
-    Q_ASSERT_INCRIT(320, m_ao.m_eQueue.m_nFree &lt; 0xFFU);
+    QP_ASSERT_INCRIT(320, m_ao.m_eQueue.m_nFree &lt; 0xFFU);
 
     // lock one more level
     m_ao.m_eQueue.m_nFree = m_ao.m_eQueue.m_nFree + 1U;
@@ -6339,7 +6339,7 @@ else if (m_ao.m_osObject == curr) {
 else { // the mutex is already locked by a different thread
     if (m_ao.m_prio != 0U) {  // prio.-ceiling protocol used?
         // the prio slot must be occupied by the thr. holding the mutex
-        Q_ASSERT_INCRIT(330, QActive::registry_[m_ao.m_prio]
+        QP_ASSERT_INCRIT(330, QActive::registry_[m_ao.m_prio]
             == QXK_PTR_CAST_(QActive const *, m_ao.m_osObject));
     }
 
@@ -6379,7 +6379,7 @@ if (m_ao.m_eQueue.m_nFree == 1U) {
 
     if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
 
-        Q_ASSERT_INCRIT(410, m_ao.m_prio &lt; QF_MAX_ACTIVE);
+        QP_ASSERT_INCRIT(410, m_ao.m_prio &lt; QF_MAX_ACTIVE);
 
         // restore the holding thread's prio from the mutex
         curr-&gt;m_prio  =
@@ -6430,7 +6430,7 @@ if (m_ao.m_eQueue.m_nFree == 1U) {
         // - have the prio. corresponding to the registration
         // - be an extended thread
         // - be blocked on this mutex
-        Q_ASSERT_INCRIT(420, (thr != nullptr)
+        QP_ASSERT_INCRIT(420, (thr != nullptr)
             &amp;&amp; (thr-&gt;m_prio == static_cast&lt;std::uint8_t&gt;(p))
             &amp;&amp; (thr-&gt;m_state.act == Q_ACTION_CAST(0))
             &amp;&amp; (thr-&gt;m_temp.obj == QXK_PTR_CAST_(QMState*, this)));
@@ -6453,7 +6453,7 @@ if (m_ao.m_eQueue.m_nFree == 1U) {
 
         if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
             // the holder prio. must be lower than that of the mutex
-            Q_ASSERT_INCRIT(430, (m_ao.m_prio &lt; QF_MAX_ACTIVE)
+            QP_ASSERT_INCRIT(430, (m_ao.m_prio &lt; QF_MAX_ACTIVE)
                                  &amp;&amp; (thr-&gt;m_prio &lt; m_ao.m_prio));
 
             // put the thread into AO registry in place of the mutex
@@ -6470,7 +6470,7 @@ if (m_ao.m_eQueue.m_nFree == 1U) {
 
         if (m_ao.m_prio != 0U) { // prio.-ceiling protocol used?
             // the AO priority must be in range
-            Q_ASSERT_INCRIT(440, m_ao.m_prio &lt; QF_MAX_ACTIVE);
+            QP_ASSERT_INCRIT(440, m_ao.m_prio &lt; QF_MAX_ACTIVE);
 
             // put the mutex back at the original mutex slot
             QActive::registry_[m_ao.m_prio] = &amp;m_ao;
@@ -6692,7 +6692,7 @@ else {
         p = static_cast&lt;std::uint_fast8_t&gt;(
              QP::QActive::registry_[QXK_priv_.lockHolder]-&gt;getPrio());
         if (p != 0U) {
-            Q_ASSERT_INCRIT(410, QXK_priv_.readySet.hasElement(p));
+            QP_ASSERT_INCRIT(410, QXK_priv_.readySet.hasElement(p));
         }
     }
 }
@@ -6700,7 +6700,7 @@ QP::QActive const * const curr = QXK_priv_.curr;
 QP::QActive * const next = QP::QActive::registry_[p];
 
 // the next thread found must be registered in QF
-Q_ASSERT_INCRIT(420, next != nullptr);
+QP_ASSERT_INCRIT(420, next != nullptr);
 
 // is the current thread a basic-thread?
 if (curr == nullptr) {
@@ -6771,7 +6771,7 @@ do  {
     QF_MEM_SYS();
 
     // check internal integrity (duplicate inverse storage)
-    Q_ASSERT_INCRIT(502,
+    QP_ASSERT_INCRIT(502,
         QXK_priv_.readySet.verify_(&amp;QXK_priv_.readySet_dis));
 
     if (next-&gt;getEQueue().isEmpty()) { // empty queue?
@@ -6792,13 +6792,13 @@ do  {
         if (p &lt;= QXK_priv_.lockCeil) {
             p = QXK_priv_.lockHolder;
             if (p != 0U) {
-                Q_ASSERT_INCRIT(510, QXK_priv_.readySet.hasElement(p));
+                QP_ASSERT_INCRIT(510, QXK_priv_.readySet.hasElement(p));
             }
         }
 
         // set the next thread and ensure that it is registered
         next = QP::QActive::registry_[p];
-        Q_ASSERT_INCRIT(520, next != nullptr);
+        QP_ASSERT_INCRIT(520, next != nullptr);
 
         // is next a basic thread?
         if (next-&gt;getOsObject() == nullptr) {
@@ -6923,7 +6923,7 @@ QF_CRIT_EXIT();</code>
    <!--${QXK-impl::QACTIVE_EQUEUE_W~::me_}-->
    <parameter name="me_" type="QP::QActive *"/>
    <code>\
-   Q_ASSERT_INCRIT(310, (me_)-&gt;m_eQueue.m_frontEvt != nullptr)</code>
+   QP_ASSERT_INCRIT(310, (me_)-&gt;m_eQueue.m_frontEvt != nullptr)</code>
   </operation>
   <!--${QXK-impl::QACTIVE_EQUEUE_SIGNAL_}-->
   <operation name="QACTIVE_EQUEUE_SIGNAL_?ndef Q_UNSAFE" type="" visibility="0x03" properties="0x00">
@@ -7704,12 +7704,12 @@ QTimeEvt *t = static_cast&lt;QTimeEvt *&gt;(QS::rxPriv_.currObj[QS::TE_OBJ]);
 if (t != nullptr) {
 
     // the time event must be armed
-    Q_ASSERT_INCRIT(810, t-&gt;m_ctr != 0U);
+    QP_ASSERT_INCRIT(810, t-&gt;m_ctr != 0U);
 
     QActive * const act = static_cast&lt;QActive *&gt;(t-&gt;m_act);
 
     // the recipient AO must be provided
-    Q_ASSERT_INCRIT(820, act != nullptr);
+    QP_ASSERT_INCRIT(820, act != nullptr);
 
     // periodic time evt?
     if (t-&gt;m_interval != 0U) {
@@ -7756,7 +7756,7 @@ for (;;) {
         if (QTimeEvt::timeEvtHead_[tickRate].m_act != nullptr) {
 
             // sanity check
-            Q_ASSERT_INCRIT(830, prev != nullptr);
+            QP_ASSERT_INCRIT(830, prev != nullptr);
             prev-&gt;m_next = QTimeEvt::timeEvtHead_[tickRate].toTimeEvt();
             QTimeEvt::timeEvtHead_[tickRate].m_act = nullptr;
             t = prev-&gt;m_next; // switch to the new list
@@ -9346,9 +9346,9 @@ using char_t = char;
 //! Static (compile-time) assertion.
 //!
 //! @deprecated
-//! Use Q_ASSERT_STATIC() or better yet `static_assert()` instead.
+//! Use QP_ASSERT_STATIC() or better yet `static_assert()` instead.
 //!
-#define Q_ASSERT_COMPILE(expr_) Q_ASSERT_STATIC(expr_)
+#define QP_ASSERT_COMPILE(expr_) QP_ASSERT_STATIC(expr_)
 
 //! @deprecated use QP::QF::NO_MARGIN instead
 #define QF_NO_MARGIN QP::QF::NO_MARGIN
@@ -10239,7 +10239,7 @@ void glbFilter_(std::int_fast16_t const filter) noexcept {
             QS_CRIT_STAT
             QS_CRIT_ENTRY();
             // QS rec number must be below 0x7D, so no need for escaping
-            Q_ASSERT_INCRIT(210, rec &lt; 0x7DU);
+            QP_ASSERT_INCRIT(210, rec &lt; 0x7DU);
             QS_CRIT_EXIT();
 
             if (isRemove) {
@@ -10299,7 +10299,7 @@ void locFilter_(std::int_fast16_t const filter) noexcept {
             QS_CRIT_STAT
             QS_CRIT_ENTRY();
             // qsId must be in range
-            Q_ASSERT_INCRIT(310, qsId &lt; 0x7FU);
+            QP_ASSERT_INCRIT(310, qsId &lt; 0x7FU);
             QS_CRIT_EXIT();
             if (isRemove) {
                 filt_.loc[qsId &gt;&gt; 3U] &amp;=
@@ -12005,7 +12005,7 @@ void rxHandleGoodFrame_(std::uint8_t const state) {
         }
         case WAIT4_TEST_PROBE_FRAME: {
             rxReportAck_(QP::QS_RX_TEST_PROBE);
-            Q_ASSERT_INCRIT(815,
+            QP_ASSERT_INCRIT(815,
                 QP::QS::tstPriv_.tpNum
                    &lt; (sizeof(QP::QS::tstPriv_.tpBuf)
                       / sizeof(QP::QS::tstPriv_.tpBuf[0])));
@@ -12034,7 +12034,7 @@ static void rxHandleBadFrame_(std::uint8_t const state) noexcept {
         case WAIT4_EVT_FRAME: {
             QS_CRIT_STAT
             QS_CRIT_ENTRY();
-            Q_ASSERT_INCRIT(910, QP::QS::rxPriv_.var.evt.e != nullptr);
+            QP_ASSERT_INCRIT(910, QP::QS::rxPriv_.var.evt.e != nullptr);
             QS_CRIT_EXIT();
 #if (QF_MAX_EPOOL &gt; 0U)
             QP::QF::gc(QP::QS::rxPriv_.var.evt.e); // don't leak allocated evt
@@ -12247,7 +12247,7 @@ QSTimeCtr onGetTime() {
 //............................................................................
 extern &quot;C&quot; {
 
-Q_NORETURN Q_onError(
+QP_NORETURN Q_onError(
     char const * const module, 
     int_t const id)
 {

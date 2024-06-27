@@ -159,7 +159,7 @@ void QHsm::init(
 
     QF_CRIT_ENTRY();
     // the top-most initial tran. must be taken
-    Q_ASSERT_INCRIT(210, r == Q_RET_TRAN);
+    QP_ASSERT_INCRIT(210, r == Q_RET_TRAN);
 
     QS_MEM_SYS();
     QS_BEGIN_PRE_(QS_QEP_STATE_INIT, qsId)
@@ -187,7 +187,7 @@ void QHsm::init(
         QF_CRIT_ENTRY();
         // The initial transition source state must be reached
         // Too many state nesting levels or "malformed" HSM.
-        Q_ASSERT_INCRIT(220, m_temp.fun == t);
+        QP_ASSERT_INCRIT(220, m_temp.fun == t);
         QF_CRIT_EXIT();
 
         m_temp.fun = path[0];
@@ -301,7 +301,7 @@ void QHsm::dispatch(
     } while ((r == Q_RET_SUPER) && (limit > 0));
 
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(310, limit > 0);
+    QP_ASSERT_INCRIT(310, limit > 0);
     QF_CRIT_EXIT();
 
     if (r >= Q_RET_TRAN) { // regular tran. taken?
@@ -323,7 +323,7 @@ void QHsm::dispatch(
             --limit;
         }
         QF_CRIT_ENTRY();
-        Q_ASSERT_INCRIT(320, limit > 0);
+        QP_ASSERT_INCRIT(320, limit > 0);
         QF_CRIT_EXIT();
 
         std::int_fast8_t ip = hsm_tran(path, qsId); // take the tran.
@@ -383,7 +383,7 @@ void QHsm::dispatch(
             QF_CRIT_ENTRY();
             // The initial transition source state must be reached.
             // Too many state nesting levels or "malformed" HSM.
-            Q_ASSERT_INCRIT(330, m_temp.fun == t);
+            QP_ASSERT_INCRIT(330, m_temp.fun == t);
             QF_CRIT_EXIT();
 
             m_temp.fun = path[0];
@@ -510,7 +510,7 @@ QStateHandler QHsm::childState(QStateHandler const parent) noexcept {
 
     QF_CRIT_STAT
     QF_CRIT_ENTRY();
-    Q_ASSERT_INCRIT(890, isFound);
+    QP_ASSERT_INCRIT(890, isFound);
     QF_CRIT_EXIT();
 
     return child; // return the child
@@ -595,7 +595,7 @@ std::int_fast8_t QHsm::hsm_tran(
                     QF_CRIT_ENTRY();
                     // Tran. source must be found within the nesting depth
                     // Too many state nesting levels or "malformed" HSM.
-                    Q_ASSERT_INCRIT(510, r != Q_RET_SUPER);
+                    QP_ASSERT_INCRIT(510, r != Q_RET_SUPER);
                     QF_CRIT_EXIT();
 
                     // the LCA not found yet?
@@ -655,7 +655,7 @@ std::int_fast8_t QHsm::hsm_tran(
                                 --limit;
                             } while ((r != Q_RET_HANDLED) && (limit > 0));
                             QF_CRIT_ENTRY();
-                            Q_ASSERT_INCRIT(530, limit > 0);
+                            QP_ASSERT_INCRIT(530, limit > 0);
                             QF_CRIT_EXIT();
                         }
                     }

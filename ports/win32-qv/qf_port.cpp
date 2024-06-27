@@ -94,14 +94,14 @@ static int_t l_critSectNest;   // critical section nesting up-down counter
 void enterCriticalSection_() {
     if (l_isRunning) {
         EnterCriticalSection(&l_win32CritSect);
-        Q_ASSERT_INCRIT(100, l_critSectNest == 0); // NO nesting of crit.sect!
+        QP_ASSERT_INCRIT(100, l_critSectNest == 0); // NO nesting of crit.sect!
         ++l_critSectNest;
     }
 }
 //............................................................................
 void leaveCriticalSection_() {
     if (l_isRunning) {
-        Q_ASSERT_INCRIT(200, l_critSectNest == 1); // crit.sect. must ballace!
+        QP_ASSERT_INCRIT(200, l_critSectNest == 1); // crit.sect. must ballace!
         if ((--l_critSectNest) == 0) {
             LeaveCriticalSection(&l_win32CritSect);
         }
@@ -133,7 +133,7 @@ int run() {
         HANDLE ticker = CreateThread(NULL, 1024, &ticker_thread,
                                      nullptr, 0U, NULL);
         QF_CRIT_ENTRY();
-        Q_ASSERT_INCRIT(310, ticker != static_cast<HANDLE>(0));
+        QP_ASSERT_INCRIT(310, ticker != static_cast<HANDLE>(0));
         QF_CRIT_EXIT();
     }
 
@@ -145,7 +145,7 @@ int run() {
     QS_END_PRE_()
 
     while (l_isRunning) {
-        Q_ASSERT_INCRIT(300, readySet_.verify_(&readySet_dis_));
+        QP_ASSERT_INCRIT(300, readySet_.verify_(&readySet_dis_));
 
         // find the maximum priority AO ready to run
         if (readySet_.notEmpty()) {
@@ -154,7 +154,7 @@ int run() {
 
             // the active object 'a' must still be registered in QF
             // (e.g., it must not be stopped)
-            Q_ASSERT_INCRIT(320, a != nullptr);
+            QP_ASSERT_INCRIT(320, a != nullptr);
             QF_CRIT_EXIT();
 
             QEvt const *e = a->get_();

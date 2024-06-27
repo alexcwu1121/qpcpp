@@ -113,7 +113,7 @@ bool QActive::recall(QEQueue * const eq) noexcept {
             // at least twice: once in the deferred event queue (eq->get()
             // did NOT decrement the reference counter) and once in the
             // AO's event queue.
-            Q_ASSERT_INCRIT(210, e->refCtr_ >= 2U);
+            QP_ASSERT_INCRIT(210, e->refCtr_ >= 2U);
 
             // we need to decrement the reference counter once, to account
             // for removing the event from the deferred event queue.

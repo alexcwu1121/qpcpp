@@ -122,7 +122,7 @@ QSTimeCtr onGetTime() {
 //............................................................................
 extern "C" {
 
-Q_NORETURN Q_onError(
+QP_NORETURN Q_onError(
     char const * const module,
     int_t const id)
 {
@@ -292,12 +292,12 @@ void QTimeEvt::tick1_(
     if (t != nullptr) {
 
         // the time event must be armed
-        Q_ASSERT_INCRIT(810, t->m_ctr != 0U);
+        QP_ASSERT_INCRIT(810, t->m_ctr != 0U);
 
         QActive * const act = static_cast<QActive *>(t->m_act);
 
         // the recipient AO must be provided
-        Q_ASSERT_INCRIT(820, act != nullptr);
+        QP_ASSERT_INCRIT(820, act != nullptr);
 
         // periodic time evt?
         if (t->m_interval != 0U) {
@@ -344,7 +344,7 @@ void QTimeEvt::tick1_(
             if (QTimeEvt::timeEvtHead_[tickRate].m_act != nullptr) {
 
                 // sanity check
-                Q_ASSERT_INCRIT(830, prev != nullptr);
+                QP_ASSERT_INCRIT(830, prev != nullptr);
                 prev->m_next = QTimeEvt::timeEvtHead_[tickRate].toTimeEvt();
                 QTimeEvt::timeEvtHead_[tickRate].m_act = nullptr;
                 t = prev->m_next; // switch to the new list

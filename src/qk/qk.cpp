@@ -172,7 +172,7 @@ std::uint_fast8_t QK_sched_() noexcept {
         // find the highest-prio AO with non-empty event queue
         p = QK_priv_.readySet.findMax();
 
-        Q_ASSERT_INCRIT(412, QK_priv_.actThre
+        QP_ASSERT_INCRIT(412, QK_priv_.actThre
             == static_cast<std::uint_fast8_t>(~QK_priv_.actThre_dis));
 
         // is the AO's prio. below the active preemption-threshold?
@@ -180,7 +180,7 @@ std::uint_fast8_t QK_sched_() noexcept {
             p = 0U; // no activation needed
         }
         else {
-            Q_ASSERT_INCRIT(422, QK_priv_.lockCeil
+            QP_ASSERT_INCRIT(422, QK_priv_.lockCeil
                 == static_cast<std::uint_fast8_t>(~QK_priv_.lockCeil_dis));
 
             // is the AO's prio. below the lock-ceiling?
@@ -188,7 +188,7 @@ std::uint_fast8_t QK_sched_() noexcept {
                 p = 0U; // no activation needed
             }
             else {
-                Q_ASSERT_INCRIT(432, QK_priv_.nextPrio
+                QP_ASSERT_INCRIT(432, QK_priv_.nextPrio
                     == static_cast<std::uint_fast8_t>(~QK_priv_.nextPrio_dis));
                 QK_priv_.nextPrio = p; // next AO to run
     #ifndef Q_UNSAFE
@@ -231,20 +231,20 @@ void QK_activate_() noexcept {
     }
     else {
         a = QP::QActive::registry_[prio_in];
-        Q_ASSERT_INCRIT(510, a != nullptr);
+        QP_ASSERT_INCRIT(510, a != nullptr);
 
         pthre_in = static_cast<std::uint_fast8_t>(a->getPThre());
-        Q_ASSERT_INCRIT(511, pthre_in == static_cast<std::uint_fast8_t>(
+        QP_ASSERT_INCRIT(511, pthre_in == static_cast<std::uint_fast8_t>(
             ~static_cast<std::uint_fast8_t>(a->m_pthre_dis) & 0xFFU));
     }
 
     // loop until no more ready-to-run AOs of higher pthre than the initial
     do  {
         a = QP::QActive::registry_[p]; // obtain the pointer to the AO
-        Q_ASSERT_INCRIT(520, a != nullptr); // the AO must be registered
+        QP_ASSERT_INCRIT(520, a != nullptr); // the AO must be registered
         std::uint_fast8_t const pthre
             = static_cast<std::uint_fast8_t>(a->getPThre());
-        Q_ASSERT_INCRIT(522, pthre == static_cast<std::uint_fast8_t>(
+        QP_ASSERT_INCRIT(522, pthre == static_cast<std::uint_fast8_t>(
             ~static_cast<std::uint_fast8_t>(a->m_pthre_dis) & 0xFFU));
 
         // set new active prio. and preemption-threshold
@@ -288,7 +288,7 @@ void QK_activate_() noexcept {
         QF_MEM_SYS();
 
         // internal integrity check (duplicate inverse storage)
-        Q_ASSERT_INCRIT(532,
+        QP_ASSERT_INCRIT(532,
             QK_priv_.readySet.verify_(&QK_priv_.readySet_dis));
 
         if (a->getEQueue().isEmpty()) { // empty queue?
@@ -310,7 +310,7 @@ void QK_activate_() noexcept {
                 p = 0U; // no activation needed
             }
             else {
-                Q_ASSERT_INCRIT(542,
+                QP_ASSERT_INCRIT(542,
                     QK_priv_.lockCeil == ~QK_priv_.lockCeil_dis);
 
                 // is the AO's prio. below the lock preemption-threshold?
@@ -318,7 +318,7 @@ void QK_activate_() noexcept {
                     p = 0U; // no activation needed
                 }
                 else {
-                    Q_ASSERT_INCRIT(550, p <= QF_MAX_ACTIVE);
+                    QP_ASSERT_INCRIT(550, p <= QF_MAX_ACTIVE);
                 }
             }
         }

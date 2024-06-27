@@ -130,14 +130,14 @@ static int_t l_critSectNest;   // critical section nesting up-down counter
 void enterCriticalSection_() {
     if (l_isRunning) {
         pthread_mutex_lock(&l_critSectMutex_);
-        Q_ASSERT_INCRIT(100, l_critSectNest == 0); // NO nesting of crit.sect!
+        QP_ASSERT_INCRIT(100, l_critSectNest == 0); // NO nesting of crit.sect!
         ++l_critSectNest;
     }
 }
 //............................................................................
 void leaveCriticalSection_() {
     if (l_isRunning) {
-        Q_ASSERT_INCRIT(200, l_critSectNest == 1); // crit.sect. must ballace!
+        QP_ASSERT_INCRIT(200, l_critSectNest == 1); // crit.sect. must ballace!
         if ((--l_critSectNest) == 0) {
             pthread_mutex_unlock(&l_critSectMutex_);
         }
@@ -207,7 +207,7 @@ int run() {
             err = pthread_create(&ticker, &attr, &ticker_thread, 0);
         }
         QF_CRIT_ENTRY();
-        Q_ASSERT_INCRIT(310, err == 0); // ticker thread must be created
+        QP_ASSERT_INCRIT(310, err == 0); // ticker thread must be created
         QF_CRIT_EXIT();
 
         //pthread_attr_getschedparam(&attr, &param);
@@ -224,7 +224,7 @@ int run() {
     QS_END_PRE_()
 
     while (l_isRunning) {
-        Q_ASSERT_INCRIT(300, readySet_.verify_(&readySet_dis_));
+        QP_ASSERT_INCRIT(300, readySet_.verify_(&readySet_dis_));
 
         // find the maximum priority AO ready to run
         if (readySet_.notEmpty()) {
@@ -233,7 +233,7 @@ int run() {
 
             // the active object 'a' must still be registered in QF
             // (e.g., it must not be stopped)
-            Q_ASSERT_INCRIT(320, a != nullptr);
+            QP_ASSERT_INCRIT(320, a != nullptr);
             QF_CRIT_EXIT();
 
             QEvt const *e = a->get_();
@@ -255,12 +255,12 @@ int run() {
             // for events. Instead, the POSIX-QV port efficiently waits until
             // QP events become available.
             while (readySet_.isEmpty()) {
-                Q_ASSERT_INCRIT(390, l_critSectNest == 1);
+                QP_ASSERT_INCRIT(390, l_critSectNest == 1);
                 --l_critSectNest;
 
                 pthread_cond_wait(&condVar_, &l_critSectMutex_);
 
-                Q_ASSERT_INCRIT(391, l_critSectNest == 0);
+                QP_ASSERT_INCRIT(391, l_critSectNest == 0);
                 ++l_critSectNest;
             }
         }
